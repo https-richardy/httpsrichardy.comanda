@@ -61,18 +61,20 @@ Each directory represents an independent system with its own solution, source co
 
 <h4 align="center">EXTERNAL SERVICES BEHIND COMANDA</h4>
 
-#### PIX Transactions
-
 > Comanda integrates with **AbacatePay** to process PIX-based payments, enabling fast and localized transactions for Brazilian merchants.  
 This powers the real-time checkout experience used by stores when processing customer orders.
 
 - Website: https://www.abacatepay.com/
 - Documentation: https://docs.abacatepay.com/
 
-#### Subscription & Billing Infrastructure
-
 > As a SaaS platform, Comanda relies on **Stripe** to manage the full subscription lifecycle.  
 Recurring billing, subscription status, payment retries, and invoicing are orchestrated through Stripe’s infrastructure, ensuring platform monetization remains robust and operationally independent from merchant revenue flows.
 
 - Website: https://stripe.com/
 - Documentation: https://docs.stripe.com/
+
+> Comanda also integrates with its own Internal **Federation** Service, responsible for identity management and trusted application federation.
+This service enables secure communication between internal applications, allowing them to trust each other through token validation, signature verification, and controlled realm-based access.
+
+- Documentation: https://github.com/https-richardy/httpsrichardy.federation.webapi
+- Repository: https://github.com/https-richardy/httpsrichardy.federation.webapi
