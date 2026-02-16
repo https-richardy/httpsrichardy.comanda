@@ -8,7 +8,7 @@ global using HttpsRichardy.Internal.Essentials.Patterns;
 global using HttpsRichardy.Internal.Essentials.Filtering;
 global using HttpsRichardy.Internal.Essentials.Concepts;
 
-global using Vinder.Dispatcher.Contracts;
+global using HttpsRichardy.Dispatcher.Contracts;
 
 global using Comanda.Internal.Contracts.Errors;
 global using Comanda.Internal.Contracts.Helpers;
