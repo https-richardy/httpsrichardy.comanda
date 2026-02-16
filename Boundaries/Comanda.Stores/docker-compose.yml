@@ -1,0 +1,45 @@
+services:
+  comanda.stores.infrastructure.mongo.database:
+    container_name: "comanda.stores.database"
+    image: mongo:latest
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - comanda.stores.infrastructure.mongo.database:/data/db
+
+  comanda.infrastructure.federation:
+    container_name: "comanda.infrastructure.federation"
+    image: httpsrichardy/federation:latest
+    env_file:
+      - .env
+    ports:
+      - "5000:8080"
+    depends_on:
+      - comanda.stores.infrastructure.mongo.database
+    environment:
+      Settings__Database__ConnectionString: ${MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${MONGO_DATABASENAME}
+      Settings__Administration__Username: ${ADMIN_USERNAME}
+      Settings__Administration__Password: ${ADMIN_PASSWORD}
+
+  comanda.stores.infrastructure.seq:
+    container_name: "comanda.stores.seq"
+    image: datalust/seq:latest
+    restart: unless-stopped
+    ports:
+      - "5341:80"
+      - "5342:5341"
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_ADMINPASSWORD: ${SEQ_FIRSTRUN_ADMINPASSWORD}
+    volumes:
+      - comanda.stores.infrastructure.seq:/data
+
+volumes:
+  comanda.stores.infrastructure.mongo.database:
+  comanda.stores.infrastructure.seq:

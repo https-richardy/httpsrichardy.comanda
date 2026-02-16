@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.18.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.12" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="Testcontainers" Version="4.10.0" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Source\Comanda.Subscriptions.Application\Comanda.Subscriptions.Application.csproj" />
+    <ProjectReference Include="..\Source\Comanda.Subscriptions.CrossCutting\Comanda.Subscriptions.CrossCutting.csproj" />
+    <ProjectReference Include="..\Source\Comanda.Subscriptions.Domain\Comanda.Subscriptions.Domain.csproj" />
+    <ProjectReference Include="..\Source\Comanda.Subscriptions.Infrastructure\Comanda.Subscriptions.Infrastructure.csproj" />
+    <ProjectReference Include="..\Source\Comanda.Subscriptions.WebApi\Comanda.Subscriptions.WebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

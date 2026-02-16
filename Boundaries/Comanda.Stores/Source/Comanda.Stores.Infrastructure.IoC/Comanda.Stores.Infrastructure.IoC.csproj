@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Comanda.Stores.Application/Comanda.Stores.Application.csproj" />
+    <ProjectReference Include="../Comanda.Stores.CrossCutting/Comanda.Stores.CrossCutting.csproj" />
+    <ProjectReference Include="../Comanda.Stores.Infrastructure/Comanda.Stores.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
