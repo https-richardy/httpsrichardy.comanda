@@ -14,8 +14,8 @@ public static class SpecificationsExtension
             options.HideSearch = true;
             options.Servers = [];
 
-            options.WithTitle("comanda stores | vinder.io");
-            options.WithClassicLayout();
+            options.WithTitle("comanda stores | reference");
+            options.ExpandAllTags();
 
             if (environment.IsProduction())
             {
