@@ -1,7 +1,7 @@
-#### The Idea Behind Comanda
+#### THE IDEA BEHIND COMANDA
 Comanda is a SaaS platform designed to manage online orders and digital payments for fast-food establishments. It enables businesses to receive, process, and track customer orders in real time, providing a scalable foundation for modern, digital-first operations.
 
-#### The Architecture Behind Comanda
+#### THE ARCHITECTURE BEHIND COMANDA
 
 Comanda is architected around explicit bounded contexts, each one representing an independent system with its own lifecycle and deployment pipeline. Every boundary is deployable on its own, evolving autonomously without leaking concerns across domains.
 
@@ -10,7 +10,7 @@ Rather than a traditional layered monolith, Comanda is structured as a distribut
 
 ---
 
-#### Repository Structure
+#### REPOSITORY STRUCTURE
 
 The repository is intentionally structured to reflect Comanda’s architectural boundaries and operational model.
 
