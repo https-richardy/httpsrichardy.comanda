@@ -27,3 +27,31 @@ The repository is intentionally structured to reflect Comanda’s architectural 
 
 All bounded contexts live in `Boundaries/` directory (e.g., Comanda.Stores, Comanda.Subscriptions).
 Each directory represents an independent system with its own solution, source code, tests, Docker configuration, and deployment pipeline. Every boundary builds, evolves, and deploys autonomously.
+
+
+<h4 align="center">THE TECHNOLOGY STACK BEHIND COMANDA</h4>
+
+<div align="center">
+  <!-- Stacks -->
+  <img src="https://www.vectorlogo.zone/logos/dotnet/dotnet-tile.svg" width="25" alt=".NET" />
+  <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" width="25" alt="MongoDB" />
+  <img src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg" width="25" alt="Docker" />
+
+  <!-- DevOps -->
+  <img src="https://www.vectorlogo.zone/logos/sentryio/sentryio-ar21.svg" width="60" alt="Sentry" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" width="25" alt="GitHub Actions" />
+</div>
+
+
+<div align="center">
+
+| Layer | Technology | Purpose |
+|:-------------:|:------------:|:--------------------------------------------------:|
+| Backend | .NET 9 | High-performance APIs and long-term maintainability |
+| Persistence | MongoDB | Aggregate-oriented, boundary-aligned persistence |
+| Resilience | Polly | Retries, circuit breakers, and explicit QoS policies |
+| Observability | Sentry · Seq | Real-time errors, tracing, and structured diagnostics |
+| Containerization | Docker | Isolation and reproducible deployments |
+| CI/CD | GitHub Actions | Autonomous pipelines per bounded context |
+
+</div>
