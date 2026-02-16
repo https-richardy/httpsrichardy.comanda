@@ -1,6 +1,6 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Products;
 
-public sealed record ProductDeletionScheme : IMessage<Result>
+public sealed record ProductDeletionScheme : IDispatchable<Result>
 {
     [property: JsonIgnore]
     public string EstablishmentId { get; init; } = default!;

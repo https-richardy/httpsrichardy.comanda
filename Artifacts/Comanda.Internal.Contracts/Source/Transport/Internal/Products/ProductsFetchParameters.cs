@@ -1,7 +1,7 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Products;
 
 public sealed record ProductsFetchParameters :
-    IMessage<Result<PaginationScheme<ProductScheme>>>
+    IDispatchable<Result<PaginationScheme<ProductScheme>>>
 {
     public string? Id { get; init; }
     public string? EstablishmentId { get; init; }

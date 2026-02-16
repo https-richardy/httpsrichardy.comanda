@@ -1,7 +1,7 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Profiles;
 
 public sealed record FetchCustomersParameters :
-    IMessage<Result<PaginationScheme<CustomerScheme>>>
+    IDispatchable<Result<PaginationScheme<CustomerScheme>>>
 {
     public string? CustomerId { get; init; }
     public string? UserId { get; init; }

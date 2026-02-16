@@ -1,6 +1,6 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Products;
 
-public sealed record ProductCreationScheme : IMessage<Result<ProductScheme>>
+public sealed record ProductCreationScheme : IDispatchable<Result<ProductScheme>>
 {
     [property: JsonIgnore]
     // this will be ignored in the payload, but will be set by the route.

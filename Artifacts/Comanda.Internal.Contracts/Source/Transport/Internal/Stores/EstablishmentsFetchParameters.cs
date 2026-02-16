@@ -1,7 +1,7 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Stores;
 
 public sealed record EstablishmentsFetchParameters :
-    IMessage<Result<PaginationScheme<EstablishmentScheme>>>
+    IDispatchable<Result<PaginationScheme<EstablishmentScheme>>>
 {
     public string? Id { get; set; }
     public string? OwnerId { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Orders;
 
-public sealed record OrderModificationScheme : IMessage<Result<OrderScheme>>
+public sealed record OrderModificationScheme : IDispatchable<Result<OrderScheme>>
 {
     [property: JsonIgnore]
     public string Id { get; init; } = default!;

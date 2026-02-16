@@ -1,6 +1,6 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Profiles;
 
-public sealed record OwnerCreationScheme : IMessage<Result<OwnerScheme>>
+public sealed record OwnerCreationScheme : IDispatchable<Result<OwnerScheme>>
 {
     public string FirstName { get; init; } = string.Empty;
     public string LastName { get; init; } = string.Empty;

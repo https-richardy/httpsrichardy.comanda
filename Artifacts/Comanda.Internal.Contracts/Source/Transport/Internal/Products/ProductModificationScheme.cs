@@ -1,6 +1,6 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Products;
 
-public sealed record ProductModificationScheme : IMessage<Result<ProductScheme>>
+public sealed record ProductModificationScheme : IDispatchable<Result<ProductScheme>>
 {
     [property: JsonIgnore]
     public string EstablishmentId { get; set; } = default!;

@@ -1,6 +1,6 @@
 namespace Comanda.Internal.Contracts.Transport.Internal.Payments;
 
-public sealed record PaymentStatusUpdateScheme : IMessage<Result<PaymentScheme>>
+public sealed record PaymentStatusUpdateScheme : IDispatchable<Result<PaymentScheme>>
 {
     [property: JsonIgnore]
     public string Identifier { get; init; } = default!;

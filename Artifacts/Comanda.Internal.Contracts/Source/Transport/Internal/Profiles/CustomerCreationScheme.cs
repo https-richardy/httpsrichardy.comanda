@@ -1,6 +1,6 @@
 namespace Comanda.Internal.Contracts.Transport.Internal.Profiles;
 
-public sealed record CustomerCreationScheme : IMessage<Result<CustomerScheme>>
+public sealed record CustomerCreationScheme : IDispatchable<Result<CustomerScheme>>
 {
     public string FirstName { get; init; } = string.Empty;
     public string LastName { get; init; } = string.Empty;

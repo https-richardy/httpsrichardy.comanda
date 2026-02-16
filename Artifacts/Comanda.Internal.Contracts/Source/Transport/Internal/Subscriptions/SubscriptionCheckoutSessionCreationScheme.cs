@@ -1,7 +1,7 @@
 namespace Comanda.Internal.Contracts.Transport.Internal.Subscriptions;
 
 public sealed record SubscriptionCheckoutSessionCreationScheme :
-    IMessage<Result<SubscriptionCheckoutSession>>
+    IDispatchable<Result<SubscriptionCheckoutSession>>
 {
     public Plan Plan { get; init; } = Plan.None;
     public User Subscriber { get; init; } = default!;

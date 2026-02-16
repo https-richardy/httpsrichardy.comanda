@@ -1,7 +1,7 @@
 namespace Comanda.Internal.Contracts.Transport.Internal.Subscriptions;
 
 public sealed record SubscriptionsFetchParameters :
-    IMessage<Result<PaginationScheme<SubscriptionScheme>>>
+    IDispatchable<Result<PaginationScheme<SubscriptionScheme>>>
 {
     public string? Id { get; init; }
     public string? SubscriberId { get; init; }

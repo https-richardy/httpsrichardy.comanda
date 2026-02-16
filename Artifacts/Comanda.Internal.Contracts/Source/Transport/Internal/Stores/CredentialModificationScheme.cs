@@ -1,6 +1,6 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Stores;
 
-public sealed record CredentialModificationScheme : IMessage<Result<CredentialScheme>>
+public sealed record CredentialModificationScheme : IDispatchable<Result<CredentialScheme>>
 {
     [property: JsonIgnore]
     public string EstablishmentId { get; init; } = default!;

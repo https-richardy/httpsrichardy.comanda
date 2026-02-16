@@ -1,6 +1,6 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Profiles;
 
-public sealed record EditOwnerScheme : IMessage<Result<OwnerScheme>>
+public sealed record EditOwnerScheme : IDispatchable<Result<OwnerScheme>>
 {
     [property: JsonIgnore] // to be set from route parameter
     public string OwnerId { get; init; } = default!;

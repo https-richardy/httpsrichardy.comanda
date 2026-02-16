@@ -1,6 +1,6 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Profiles;
 
-public sealed record EditCustomerScheme : IMessage<Result<CustomerScheme>>
+public sealed record EditCustomerScheme : IDispatchable<Result<CustomerScheme>>
 {
     [property: JsonIgnore]
     public string CustomerId { get; init; } = default!;

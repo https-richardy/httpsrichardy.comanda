@@ -1,7 +1,7 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Stores;
 
 public sealed record EstablishmentModificationScheme :
-    IMessage<Result<EstablishmentScheme>>
+    IDispatchable<Result<EstablishmentScheme>>
 {
     [property: JsonIgnore]
     public string EstablishmentId { get; set; } = default!;

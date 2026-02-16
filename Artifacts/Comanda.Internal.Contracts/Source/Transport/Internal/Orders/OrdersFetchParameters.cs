@@ -1,7 +1,7 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Orders;
 
 public sealed record OrdersFetchParameters :
-    IMessage<Result<PaginationScheme<OrderScheme>>>
+    IDispatchable<Result<PaginationScheme<OrderScheme>>>
 {
     public string? Id { get; set; }
     public string? Code { get; set; }

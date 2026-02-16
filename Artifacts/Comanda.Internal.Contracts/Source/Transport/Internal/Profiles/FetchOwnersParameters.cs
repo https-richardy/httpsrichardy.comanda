@@ -1,7 +1,7 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Profiles;
 
 public sealed record FetchOwnersParameters :
-    IMessage<Result<PaginationScheme<OwnerScheme>>>
+    IDispatchable<Result<PaginationScheme<OwnerScheme>>>
 {
     public string? OwnerId { get; init; }
     public string? UserId { get; init; }

@@ -1,7 +1,7 @@
 ﻿namespace Comanda.Internal.Contracts.Transport.Internal.Payments;
 
 public sealed record PaymentsFetchParameters :
-    IMessage<Result<PaginationScheme<PaymentScheme>>>
+    IDispatchable<Result<PaginationScheme<PaymentScheme>>>
 {
     public string? Id { get; set; }
     public string? PayerId { get; set; }
