@@ -1,0 +1,46 @@
+name: workflow — trigger comanda production deployment
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      subscriptions: ${{ steps.filter.outputs.subscriptions }}
+      stores: ${{ steps.filter.outputs.stores }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: detect changed paths
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            subscriptions:
+              - 'Boundaries/Comanda.Subscriptions/**'
+            stores:
+              - 'Boundaries/Comanda.Stores/**'
+
+  deploy-subscriptions:
+    needs: changes
+    if: needs.changes.outputs.subscriptions == 'true'
+    uses: ./.github/workflows/deploy-pipeline.yml
+    with:
+      service_path: Boundaries/Comanda.Subscriptions
+      image_name: httpsrichardy/comanda.subscriptions
+      deploy_url_secret: SUBSCRIPTIONS_PRODUCTION_DEPLOY_URL
+    secrets: inherit
+
+  deploy-stores:
+    needs: changes
+    if: needs.changes.outputs.stores == 'true'
+    uses: ./.github/workflows/deploy-pipeline.yml
+    with:
+      service_path: Boundaries/Comanda.Stores
+      image_name: httpsrichardy/comanda.stores
+      deploy_url_secret: STORES_PRODUCTION_DEPLOY_URL
+    secrets: inherit
