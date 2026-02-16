@@ -10,11 +10,10 @@ public static class SpecificationsExtension
             options.HideDarkModeToggle = true;
             options.HideClientButton = true;
             options.HideModels = true;
-            options.HideSearch = true;
             options.Servers = [];
 
-            options.WithTitle("comanda subscriptions | vinder.io");
-            options.WithClassicLayout();
+            options.WithTitle("comanda subscriptions | reference");
+            options.ExpandAllTags();
 
             if (environment.IsProduction())
             {
