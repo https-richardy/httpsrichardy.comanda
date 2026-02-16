@@ -28,6 +28,7 @@ The repository is intentionally structured to reflect Comanda’s architectural 
 All bounded contexts live in `Boundaries/` directory (e.g., Comanda.Stores, Comanda.Subscriptions).
 Each directory represents an independent system with its own solution, source code, tests, Docker configuration, and deployment pipeline. Every boundary builds, evolves, and deploys autonomously.
 
+---
 
 <h4 align="center">THE TECHNOLOGY STACK BEHIND COMANDA</h4>
 
