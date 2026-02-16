@@ -14,21 +14,16 @@ Rather than a traditional layered monolith, Comanda is structured as a distribut
 
 The repository is intentionally structured to reflect Comanda’s architectural boundaries and operational model.
 
+```text
+.
+├── .github/                # ci/cd workflows (pipelines)
+├── Artifacts/              # internal nuget packages (shared kernel/contracts)
+├── Boundaries/             # independent bounded contexts
+│   ├── Comanda.Stores/
+│   └── Comanda.Subscriptions/
+├── .editorconfig           # global code style rules
+└── nuget.config            # centralized nuget configuration
+```
 
-##### Boundaries
-
-Contains all bounded contexts (e.g., Comanda.Stores, Comanda.Subscriptions).
-Each directory represents an independent system with its own solution, source code, tests, Docker configuration, and deployment pipeline. Every boundary is designed to build, evolve, and deploy autonomously.
-
-##### Artifacts
-
-Holds internal reusable packages distributed as versioned NuGet artifacts (e.g., shared kernel, internal contracts). These packages are consumed as dependencies rather than project references, reinforcing decoupling between contexts.
-
-##### .github
-
-Defines CI/CD workflows. Each bounded context has isolated validation and deployment pipelines, ensuring independent lifecycle management.
-
-
-##### Root Configuration
-
-Includes global configuration files such as .editorconfig and nuget.config, enforcing consistent code standards and centralized package management across all contexts.
+All bounded contexts live in `Boundaries/` directory (e.g., Comanda.Stores, Comanda.Subscriptions).
+Each directory represents an independent system with its own solution, source code, tests, Docker configuration, and deployment pipeline. Every boundary builds, evolves, and deploys autonomously.
