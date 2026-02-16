@@ -1,0 +1,11 @@
+﻿namespace Comanda.Internal.Contracts.Transport.Internal.Products;
+
+public sealed record ProductCreationScheme : IMessage<Result<ProductScheme>>
+{
+    [property: JsonIgnore]
+    // this will be ignored in the payload, but will be set by the route.
+    public string EstablishmentId { get; set; } = default!;
+    public string Title { get; set; } = default!;
+    public string Description { get; set; } = default!;
+    public decimal Price { get; set; }
+}
