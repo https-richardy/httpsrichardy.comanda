@@ -186,6 +186,36 @@ services:
       Settings__Observability__SeqServerUrl: ${SEQ_SERVERURL}
       Settings__Observability__SentryDsn: ${SENTRY_DSN}
 
+  comanda.boundaries.orchestrator:
+    container_name: "comanda.boundaries.orchestrator"
+    build:
+      context: ./Boundaries/Comanda.Orchestrator/
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "5025:8080"
+    depends_on:
+      - comanda.infrastructure.federation
+      - comanda.infrastructure.seq
+    environment:
+      # federation settings
+      Settings__Federation__BaseUrl: ${COMANDA_FEDERATION_BASEURL}
+      Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
+      Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
+      Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}
+
+      # downstream settings
+      Settings__Downstream__ProfilesUrl: ${COMANDA_DOWNSTREAM_PROFILESURL}
+      Settings__Downstream__StoresUrl: ${COMANDA_DOWNSTREAM_STORESURL}
+      Settings__Downstream__PaymentsUrl: ${COMANDA_DOWNSTREAM_PAYMENTSURL}
+      Settings__Downstream__SubscriptionsUrl: ${COMANDA_DOWNSTREAM_SUBSCRIPTIONSURL}
+      Settings__Downstream__OrdersUrl: ${COMANDA_DOWNSTREAM_ORDERSURL}
+
+      # observability settings
+      Settings__Observability__SeqServerUrl: ${SEQ_SERVERURL}
+      Settings__Observability__SentryDsn: ${SENTRY_DSN}
+
 volumes:
   comanda.infrastructure.mongo:
   comanda.infrastructure.seq:
