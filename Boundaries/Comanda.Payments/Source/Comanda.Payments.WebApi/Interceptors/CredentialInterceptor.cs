@@ -23,6 +23,7 @@ public sealed class CredentialInterceptor(IHttpContextAccessor accessor) : Deleg
 
             // the credential captured from the incoming request is used as a bearer token for authorization
             // https://docs.abacatepay.com/pages/authentication
+
             if (!string.IsNullOrWhiteSpace(credential))
             {
                 request.Headers.Authorization = authorization;
