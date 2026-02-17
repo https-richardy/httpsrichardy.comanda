@@ -1,0 +1,137 @@
+services:
+  vinder.comanda.infrastructure.mongo.database:
+    container_name: "vinder.comanda.database"
+    image: mongo:latest
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - vinder.comanda.infrastructure.mongo.database:/data/db
+
+  vinder.infrastructure.federation:
+    container_name: "vinder.federation"
+    image: vinderio/federation:latest
+    env_file:
+      - .env
+    ports:
+      - "5000:8080"
+    depends_on:
+      - vinder.comanda.infrastructure.mongo.database
+    environment:
+      Settings__Database__ConnectionString: ${MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${MONGO_DATABASENAME}
+      Settings__Administration__Username: ${ADMIN_USERNAME}
+      Settings__Administration__Password: ${ADMIN_PASSWORD}
+
+  vinder.comanda.orchestrator.infrastructure.seq:
+    container_name: "vinder.comanda.orchestrator.seq"
+    image: datalust/seq:latest
+    restart: unless-stopped
+    ports:
+      - "5341:80"
+      - "5342:5341"
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_ADMINPASSWORD: ${SEQ_FIRSTRUN_ADMINPASSWORD}
+    volumes:
+      - vinder.comanda.orchestrator.infrastructure.seq:/data
+
+  vinder.comanda.orders.webapi:
+    container_name: "vinder.comanda.orders.webapi"
+    image: vinderio/comanda.orders:latest
+    env_file:
+      - .env
+    ports:
+      - "8080:5000"
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      Settings__Database__ConnectionString: ${MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${MONGO_DATABASENAME}
+      Settings__Federation__BaseUrl: ${FEDERATION_BASEURL}
+      Settings__Federation__Tenant: ${FEDERATION_TENANT}
+      Settings__Federation__ClientId: ${FEDERATION_CLIENT_ID}
+      Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
+    depends_on:
+      - vinder.comanda.infrastructure.mongo.database
+
+  vinder.comanda.profiles.webapi:
+    container_name: "vinder.comanda.profiles.webapi"
+    image: vinderio/comanda.profiles:latest
+    env_file:
+      - .env
+    ports:
+      - "8085:5000"
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      Settings__Database__ConnectionString: ${MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${MONGO_DATABASENAME}
+      Settings__Federation__BaseUrl: ${FEDERATION_BASEURL}
+      Settings__Federation__Tenant: ${FEDERATION_TENANT}
+      Settings__Federation__ClientId: ${FEDERATION_CLIENT_ID}
+      Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
+    depends_on:
+      - vinder.comanda.infrastructure.mongo.database
+
+  vinder.comanda.stores.webapi:
+    container_name: "vinder.comanda.stores.webapi"
+    image: vinderio/comanda.stores:latest
+    env_file:
+      - .env
+    ports:
+      - "8090:5000"
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      Settings__Database__ConnectionString: ${MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${MONGO_DATABASENAME}
+      Settings__Federation__BaseUrl: ${FEDERATION_BASEURL}
+      Settings__Federation__Tenant: ${FEDERATION_TENANT}
+      Settings__Federation__ClientId: ${FEDERATION_CLIENT_ID}
+      Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
+    depends_on:
+      - vinder.comanda.infrastructure.mongo.database
+
+  vinder.comanda.payments.webapi:
+    container_name: "vinder.comanda.payments.webapi"
+    image: vinderio/comanda.payments:latest
+    env_file:
+      - .env
+    ports:
+      - "8095:5000"
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      Settings__Database__ConnectionString: ${MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${MONGO_DATABASENAME}
+      Settings__Federation__BaseUrl: ${FEDERATION_BASEURL}
+      Settings__Federation__Tenant: ${FEDERATION_TENANT}
+      Settings__Federation__ClientId: ${FEDERATION_CLIENT_ID}
+      Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
+      Settings__AbacatePay__Url: ${ABACATEPAY_URL}
+    depends_on:
+      - vinder.comanda.infrastructure.mongo.database
+
+  vinder.comanda.subscriptions.webapi:
+    container_name: "vinder.comanda.subscriptions.webapi"
+    image: vinderio/comanda.subscriptions:latest
+    env_file:
+      - .env
+    ports:
+      - "8100:5000"
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      Settings__Database__ConnectionString: ${MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${MONGO_DATABASENAME}
+      Settings__Federation__BaseUrl: ${FEDERATION_BASEURL}
+      Settings__Federation__Tenant: ${FEDERATION_TENANT}
+      Settings__Federation__ClientId: ${FEDERATION_CLIENT_ID}
+      Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
+      Settings__Stripe__Secret: ${STRIPE_SECRET}
+    depends_on:
+      - vinder.comanda.infrastructure.mongo.database
+
+volumes:
+  vinder.comanda.infrastructure.mongo.database:
+  vinder.comanda.orchestrator.infrastructure.seq:
