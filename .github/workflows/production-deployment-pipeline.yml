@@ -11,6 +11,7 @@ jobs:
       subscriptions: ${{ steps.filter.outputs.subscriptions }}
       stores: ${{ steps.filter.outputs.stores }}
       profiles: ${{ steps.filter.outputs.profiles }}
+      payments: ${{ steps.filter.outputs.payments }}
 
     steps:
       - name: checkout
@@ -27,6 +28,8 @@ jobs:
               - 'Boundaries/Comanda.Stores/**'
             profiles:
               - 'Boundaries/Comanda.Profiles/**'
+            payments:
+              - 'Boundaries/Comanda.Payments/**'
 
   deploy-subscriptions:
     needs: changes
@@ -56,4 +59,14 @@ jobs:
       service_path: Boundaries/Comanda.Profiles
       image_name: httpsrichardy/comanda.profiles
       deploy_url_secret: PROFILES_PRODUCTION_DEPLOY_URL
+    secrets: inherit
+
+  deploy-payments:
+    needs: changes
+    if: needs.changes.outputs.payments == 'true'
+    uses: ./.github/workflows/deploy-pipeline.yml
+    with:
+      service_path: Boundaries/Comanda.Payments
+      image_name: httpsrichardy/comanda.payments
+      deploy_url_secret: PAYMENTS_PRODUCTION_DEPLOY_URL
     secrets: inherit
