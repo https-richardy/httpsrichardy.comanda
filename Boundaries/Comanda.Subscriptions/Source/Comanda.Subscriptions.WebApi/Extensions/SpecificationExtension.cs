@@ -12,7 +12,7 @@ public static class SpecificationsExtension
             options.HideModels = true;
             options.Servers = [];
 
-            options.WithTitle("comanda subscriptions | reference");
+            options.WithTitle("Comanda Subscriptions | Reference");
             options.ExpandAllTags();
 
             if (environment.IsProduction())
