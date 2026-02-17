@@ -5,6 +5,8 @@ public partial class Program
     private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        var environment = builder.Environment;
         var configuration = builder.Configuration;
 
         builder.Services.AddInfrastructure(configuration);
@@ -20,7 +22,7 @@ public partial class Program
         app.MapOpenApi();
 
         app.UseHttpPipeline();
-        app.UseSpecification();
+        app.UseSpecification(environment);
 
         await app.RunAsync();
     }
