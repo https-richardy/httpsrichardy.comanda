@@ -8,9 +8,8 @@ public static class MonitoringExtension
         if (!builder.Environment.IsDevelopment() && !builder.Environment.IsProduction())
             return;
 
-        var settings = builder.Services
-            .BuildServiceProvider()
-            .GetRequiredService<ISettings>();
+        var provider = builder.Services.BuildServiceProvider();
+        var settings = provider.GetRequiredService<ISettings>();
 
         // https://docs.sentry.io/platforms/dotnet/
         builder.WebHost.UseSentry(options =>
