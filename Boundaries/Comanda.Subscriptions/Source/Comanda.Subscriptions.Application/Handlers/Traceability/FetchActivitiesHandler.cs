@@ -9,7 +9,7 @@ public sealed class FetchActivitiesHandler(IActivityCollection collection) :
         var filters = ActivityFilters.WithSpecifications()
             .WithAction(parameters.Action)
             .WithUser(parameters.UserId)
-            .WithRealm(parameters.RealmId)
+            .WithTenant(parameters.TenantId)
             .WithResource(parameters.Resource)
             .WithPagination(parameters.Pagination)
             .Build();
