@@ -13,6 +13,7 @@ jobs:
       profiles: ${{ steps.filter.outputs.profiles }}
       payments: ${{ steps.filter.outputs.payments }}
       orders: ${{ steps.filter.outputs.orders }}
+      orchestrator: ${{ steps.filter.outputs.orchestrator }}
 
     steps:
       - name: checkout
@@ -33,6 +34,8 @@ jobs:
               - 'Boundaries/Comanda.Payments/**'
             orders:
               - 'Boundaries/Comanda.Orders/**'
+            orchestrator:
+              - 'Boundaries/Comanda.Orchestrator/**'
 
   deploy-subscriptions:
     needs: changes
@@ -82,4 +85,14 @@ jobs:
       service_path: Boundaries/Comanda.Orders
       image_name: httpsrichardy/comanda.orders
       deploy_url_secret: ORDERS_PRODUCTION_DEPLOY_URL
+    secrets: inherit
+
+  deploy-orchestrator:
+    needs: changes
+    if: needs.changes.outputs.orchestrator == 'true'
+    uses: ./.github/workflows/deploy-pipeline.yml
+    with:
+      service_path: Boundaries/Comanda.Orchestrator
+      image_name: httpsrichardy/comanda.orchestrator
+      deploy_url_secret: ORCHESTRATOR_PRODUCTION_DEPLOY_URL
     secrets: inherit
