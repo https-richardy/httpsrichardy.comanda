@@ -1,6 +1,6 @@
 services:
-  vinder.comanda.infrastructure.mongo.database:
-    container_name: "vinder.comanda.database"
+  comanda.infrastructure.mongo.database:
+    container_name: "comanda.database"
     image: mongo:latest
     env_file:
       - .env
@@ -10,25 +10,25 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - vinder.comanda.infrastructure.mongo.database:/data/db
+      - comanda.infrastructure.mongo.database:/data/db
 
-  vinder.infrastructure.federation:
-    container_name: "vinder.federation"
-    image: vinderio/federation:latest
+  comanda.infrastructure.federation:
+    container_name: "comanda.infrastructure.federation"
+    image: httpsrichardy/federation:latest
     env_file:
       - .env
     ports:
       - "5000:8080"
     depends_on:
-      - vinder.comanda.infrastructure.mongo.database
+      - comanda.infrastructure.mongo.database
     environment:
       Settings__Database__ConnectionString: ${MONGO_CONNECTIONSTRING}
       Settings__Database__DatabaseName: ${MONGO_DATABASENAME}
       Settings__Administration__Username: ${ADMIN_USERNAME}
       Settings__Administration__Password: ${ADMIN_PASSWORD}
 
-  vinder.comanda.orchestrator.infrastructure.seq:
-    container_name: "vinder.comanda.orchestrator.seq"
+  comanda.orchestrator.infrastructure.seq:
+    container_name: "comanda.orchestrator.seq"
     image: datalust/seq:latest
     restart: unless-stopped
     ports:
@@ -38,11 +38,11 @@ services:
       ACCEPT_EULA: "Y"
       SEQ_FIRSTRUN_ADMINPASSWORD: ${SEQ_FIRSTRUN_ADMINPASSWORD}
     volumes:
-      - vinder.comanda.orchestrator.infrastructure.seq:/data
+      - comanda.orchestrator.infrastructure.seq:/data
 
-  vinder.comanda.orders.webapi:
-    container_name: "vinder.comanda.orders.webapi"
-    image: vinderio/comanda.orders:latest
+  comanda.orders.webapi:
+    container_name: "comanda.orders.webapi"
+    image: httpsrichardy/comanda.orders:latest
     env_file:
       - .env
     ports:
@@ -56,11 +56,11 @@ services:
       Settings__Federation__ClientId: ${FEDERATION_CLIENT_ID}
       Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
     depends_on:
-      - vinder.comanda.infrastructure.mongo.database
+      - comanda.infrastructure.mongo.database
 
-  vinder.comanda.profiles.webapi:
-    container_name: "vinder.comanda.profiles.webapi"
-    image: vinderio/comanda.profiles:latest
+  comanda.profiles.webapi:
+    container_name: "comanda.profiles.webapi"
+    image: httpsrichardy/comanda.profiles:latest
     env_file:
       - .env
     ports:
@@ -74,11 +74,11 @@ services:
       Settings__Federation__ClientId: ${FEDERATION_CLIENT_ID}
       Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
     depends_on:
-      - vinder.comanda.infrastructure.mongo.database
+      - comanda.infrastructure.mongo.database
 
-  vinder.comanda.stores.webapi:
-    container_name: "vinder.comanda.stores.webapi"
-    image: vinderio/comanda.stores:latest
+  comanda.stores.webapi:
+    container_name: "comanda.stores.webapi"
+    image: httpsrichardy/comanda.stores:latest
     env_file:
       - .env
     ports:
@@ -92,11 +92,11 @@ services:
       Settings__Federation__ClientId: ${FEDERATION_CLIENT_ID}
       Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
     depends_on:
-      - vinder.comanda.infrastructure.mongo.database
+      - comanda.infrastructure.mongo.database
 
-  vinder.comanda.payments.webapi:
-    container_name: "vinder.comanda.payments.webapi"
-    image: vinderio/comanda.payments:latest
+  comanda.payments.webapi:
+    container_name: "comanda.payments.webapi"
+    image: httpsrichardy/comanda.payments:latest
     env_file:
       - .env
     ports:
@@ -111,11 +111,11 @@ services:
       Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
       Settings__AbacatePay__Url: ${ABACATEPAY_URL}
     depends_on:
-      - vinder.comanda.infrastructure.mongo.database
+      - comanda.infrastructure.mongo.database
 
-  vinder.comanda.subscriptions.webapi:
-    container_name: "vinder.comanda.subscriptions.webapi"
-    image: vinderio/comanda.subscriptions:latest
+  comanda.subscriptions.webapi:
+    container_name: "comanda.subscriptions.webapi"
+    image: httpsrichardy/comanda.subscriptions:latest
     env_file:
       - .env
     ports:
@@ -130,8 +130,8 @@ services:
       Settings__Federation__ClientSecret: ${FEDERATION_CLIENT_SECRET}
       Settings__Stripe__Secret: ${STRIPE_SECRET}
     depends_on:
-      - vinder.comanda.infrastructure.mongo.database
+      - comanda.infrastructure.mongo.database
 
 volumes:
-  vinder.comanda.infrastructure.mongo.database:
-  vinder.comanda.orchestrator.infrastructure.seq:
+  comanda.infrastructure.mongo.database:
+  comanda.orchestrator.infrastructure.seq:
