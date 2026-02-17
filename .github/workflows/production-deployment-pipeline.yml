@@ -10,6 +10,7 @@ jobs:
     outputs:
       subscriptions: ${{ steps.filter.outputs.subscriptions }}
       stores: ${{ steps.filter.outputs.stores }}
+      profiles: ${{ steps.filter.outputs.profiles }}
 
     steps:
       - name: checkout
@@ -24,6 +25,8 @@ jobs:
               - 'Boundaries/Comanda.Subscriptions/**'
             stores:
               - 'Boundaries/Comanda.Stores/**'
+            profiles:
+              - 'Boundaries/Comanda.Profiles/**'
 
   deploy-subscriptions:
     needs: changes
@@ -43,4 +46,14 @@ jobs:
       service_path: Boundaries/Comanda.Stores
       image_name: httpsrichardy/comanda.stores
       deploy_url_secret: STORES_PRODUCTION_DEPLOY_URL
+    secrets: inherit
+
+  deploy-profiles:
+    needs: changes
+    if: needs.changes.outputs.profiles == 'true'
+    uses: ./.github/workflows/deploy-pipeline.yml
+    with:
+      service_path: Boundaries/Comanda.Profiles
+      image_name: httpsrichardy/comanda.profiles
+      deploy_url_secret: PROFILES_PRODUCTION_DEPLOY_URL
     secrets: inherit
