@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
     ports:
-      - "5000:8080"
+      - "5100:8080"
     depends_on:
       - comanda.infrastructure.mongo
     environment:
@@ -53,7 +53,7 @@ services:
     env_file:
       - .env
     ports:
-      - "5005:8080"
+      - "5000:8080"
     depends_on:
       - comanda.infrastructure.federation
       - comanda.infrastructure.seq
@@ -80,7 +80,7 @@ services:
     env_file:
       - .env
     ports:
-      - "5010:8080"
+      - "5005:8080"
     depends_on:
       - comanda.infrastructure.federation
       - comanda.infrastructure.seq
@@ -110,7 +110,7 @@ services:
     env_file:
       - .env
     ports:
-      - "5005:8080"
+      - "5010:8080"
     depends_on:
       - comanda.infrastructure.federation
       - comanda.infrastructure.seq
@@ -124,6 +124,36 @@ services:
       Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
       Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
       Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}
+
+      # observability settings
+      Settings__Observability__SeqServerUrl: ${SEQ_SERVERURL}
+      Settings__Observability__SentryDsn: ${SENTRY_DSN}
+
+  comanda.boundaries.payments:
+    container_name: "comanda.boundaries.payments"
+    build:
+      context: ./Boundaries/Comanda.Payments/
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "5015:8080"
+    depends_on:
+      - comanda.infrastructure.federation
+      - comanda.infrastructure.seq
+    environment:
+      # database settings
+      Settings__Database__ConnectionString: ${COMANDA_MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${COMANDA_MONGO_DATABASENAME}
+
+      # federation settings
+      Settings__Federation__BaseUrl: ${COMANDA_FEDERATION_BASEURL}
+      Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
+      Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
+      Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}
+
+      # abacatepay settings
+      Settings__AbacatePay__Url: ${COMANDA_ABACATEPAY_URL}
 
       # observability settings
       Settings__Observability__SeqServerUrl: ${SEQ_SERVERURL}
