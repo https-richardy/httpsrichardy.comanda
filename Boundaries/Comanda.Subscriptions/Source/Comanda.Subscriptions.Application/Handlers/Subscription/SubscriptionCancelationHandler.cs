@@ -4,9 +4,9 @@ public sealed class SubscriptionCancelationHandler(ISubscriptionGateway subscrip
     IDispatchHandler<SubscriptionCancelationScheme, Result<SubscriptionScheme>>
 {
     public async Task<Result<SubscriptionScheme>> HandleAsync(
-        SubscriptionCancelationScheme message, CancellationToken cancellation = default)
+        SubscriptionCancelationScheme parameters, CancellationToken cancellation = default)
     {
-        var result = await subscriptionGateway.CancelSubscriptionAsync(message, cancellation);
+        var result = await subscriptionGateway.CancelSubscriptionAsync(parameters, cancellation);
 
         if (result.IsFailure || result.Data is null)
         {

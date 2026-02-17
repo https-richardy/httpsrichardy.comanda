@@ -4,9 +4,9 @@ public sealed class ProcessSuccessfulCheckoutHandler(ISubscriptionGateway subscr
     IDispatchHandler<CallbackSuccessfulCheckoutParameters, Result<SubscriptionScheme>>
 {
     public async Task<Result<SubscriptionScheme>> HandleAsync(
-        CallbackSuccessfulCheckoutParameters message, CancellationToken cancellation = default)
+        CallbackSuccessfulCheckoutParameters parameters, CancellationToken cancellation = default)
     {
-        var result = await subscriptionGateway.ProcessSuccessfulCheckoutAsync(message, cancellation);
+        var result = await subscriptionGateway.ProcessSuccessfulCheckoutAsync(parameters, cancellation);
 
         if (result.IsFailure || result.Data is null)
         {

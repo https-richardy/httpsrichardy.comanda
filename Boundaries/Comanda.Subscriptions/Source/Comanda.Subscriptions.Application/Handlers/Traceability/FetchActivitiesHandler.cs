@@ -4,14 +4,14 @@ public sealed class FetchActivitiesHandler(IActivityCollection collection) :
     IDispatchHandler<ActivityFetchParameters, Result<PaginationScheme<ActivityDetailsScheme>>>
 {
     public async Task<Result<PaginationScheme<ActivityDetailsScheme>>> HandleAsync(
-        ActivityFetchParameters message, CancellationToken cancellation = default)
+        ActivityFetchParameters parameters, CancellationToken cancellation = default)
     {
         var filters = ActivityFilters.WithSpecifications()
-            .WithAction(message.Action)
-            .WithUser(message.UserId)
-            .WithTenant(message.TenantId)
-            .WithResource(message.Resource)
-            .WithPagination(message.Pagination)
+            .WithAction(parameters.Action)
+            .WithUser(parameters.UserId)
+            .WithRealm(parameters.RealmId)
+            .WithResource(parameters.Resource)
+            .WithPagination(parameters.Pagination)
             .Build();
 
         var activities = await collection.GetActivitiesAsync(filters, cancellation: cancellation);
@@ -21,8 +21,8 @@ public sealed class FetchActivitiesHandler(IActivityCollection collection) :
         {
             Items = [.. activities.Select(activity => ActivityMapper.AsResponse(activity))],
             Total = (int)total,
-            PageNumber = message.Pagination.PageNumber,
-            PageSize = message.Pagination.PageSize,
+            PageNumber = parameters.Pagination.PageNumber,
+            PageSize = parameters.Pagination.PageSize,
         };
 
         return Result<PaginationScheme<ActivityDetailsScheme>>.Success(pagination);

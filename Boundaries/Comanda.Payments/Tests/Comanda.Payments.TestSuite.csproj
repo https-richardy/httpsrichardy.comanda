@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.18.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.8" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Testcontainers" Version="4.6.0" />
+    <PackageReference Include="xunit.v3" Version="3.0.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Source\Comanda.Payments.Application\Comanda.Payments.Application.csproj" />
+    <ProjectReference Include="..\Source\Comanda.Payments.CrossCutting\Comanda.Payments.CrossCutting.csproj" />
+    <ProjectReference Include="..\Source\Comanda.Payments.Domain\Comanda.Payments.Domain.csproj" />
+    <ProjectReference Include="..\Source\Comanda.Payments.Infrastructure\Comanda.Payments.Infrastructure.csproj" />
+    <ProjectReference Include="..\Source\Comanda.Payments.WebApi\Comanda.Payments.WebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

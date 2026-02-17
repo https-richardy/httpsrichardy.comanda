@@ -4,9 +4,9 @@ public sealed class CreateCheckoutSessionHandler(ISubscriptionGateway subscripti
     IDispatchHandler<CheckoutSessionCreationScheme, Result<CheckoutSession>>
 {
     public async Task<Result<CheckoutSession>> HandleAsync(
-        CheckoutSessionCreationScheme message, CancellationToken cancellation = default)
+        CheckoutSessionCreationScheme parameters, CancellationToken cancellation = default)
     {
-        var subscription = message.AsSubscription();
+        var subscription = parameters.AsSubscription();
         if (subscription.Plan == Plan.Premium || subscription.Plan == Plan.None)
         {
             /* for tracking purposes: raise error #COMANDA-ERROR-D910F */
@@ -22,6 +22,6 @@ public sealed class CreateCheckoutSessionHandler(ISubscriptionGateway subscripti
 
         await collection.InsertAsync(subscription, cancellation: cancellation);
 
-        return await subscriptionGateway.CreateCheckoutSessionAsync(message, cancellation);
+        return await subscriptionGateway.CreateCheckoutSessionAsync(parameters, cancellation);
     }
 }
