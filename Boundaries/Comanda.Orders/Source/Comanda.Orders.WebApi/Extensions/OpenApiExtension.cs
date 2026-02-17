@@ -20,7 +20,7 @@ public static class OpenApiExtension
                     Type = SecuritySchemeType.Http,
                     Scheme = "bearer",
                     BearerFormat = "JWT",
-                    Description = "Enter 'Bearer' and then your valid token."
+                    Description = "enter your bearer token here"
                 };
 
                 document.Components.SecuritySchemes[SecuritySchemes.OAuth2] = new OpenApiSecurityScheme
