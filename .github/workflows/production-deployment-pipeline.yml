@@ -40,7 +40,7 @@ jobs:
   deploy-subscriptions:
     needs: changes
     if: needs.changes.outputs.subscriptions == 'true'
-    uses: ./.github/workflows/deploy-pipeline.yml
+    uses: ./.github/workflows/reusable-production-deployment.yml
     with:
       service_path: Boundaries/Comanda.Subscriptions
       image_name: httpsrichardy/comanda.subscriptions
@@ -50,7 +50,7 @@ jobs:
   deploy-stores:
     needs: changes
     if: needs.changes.outputs.stores == 'true'
-    uses: ./.github/workflows/deploy-pipeline.yml
+    uses: ./.github/workflows/reusable-production-deployment.yml
     with:
       service_path: Boundaries/Comanda.Stores
       image_name: httpsrichardy/comanda.stores
@@ -60,7 +60,7 @@ jobs:
   deploy-profiles:
     needs: changes
     if: needs.changes.outputs.profiles == 'true'
-    uses: ./.github/workflows/deploy-pipeline.yml
+    uses: ./.github/workflows/reusable-production-deployment.yml
     with:
       service_path: Boundaries/Comanda.Profiles
       image_name: httpsrichardy/comanda.profiles
@@ -70,7 +70,7 @@ jobs:
   deploy-payments:
     needs: changes
     if: needs.changes.outputs.payments == 'true'
-    uses: ./.github/workflows/deploy-pipeline.yml
+    uses: ./.github/workflows/reusable-production-deployment.yml
     with:
       service_path: Boundaries/Comanda.Payments
       image_name: httpsrichardy/comanda.payments
@@ -80,7 +80,7 @@ jobs:
   deploy-orders:
     needs: changes
     if: needs.changes.outputs.orders == 'true'
-    uses: ./.github/workflows/deploy-pipeline.yml
+    uses: ./.github/workflows/reusable-production-deployment.yml
     with:
       service_path: Boundaries/Comanda.Orders
       image_name: httpsrichardy/comanda.orders
@@ -90,7 +90,7 @@ jobs:
   deploy-orchestrator:
     needs: changes
     if: needs.changes.outputs.orchestrator == 'true'
-    uses: ./.github/workflows/deploy-pipeline.yml
+    uses: ./.github/workflows/reusable-production-deployment.yml
     with:
       service_path: Boundaries/Comanda.Orchestrator
       image_name: httpsrichardy/comanda.orchestrator
