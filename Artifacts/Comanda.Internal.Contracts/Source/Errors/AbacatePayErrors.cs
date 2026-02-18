@@ -8,7 +8,7 @@ public static class AbacatePayErrors
     );
 
     public static readonly Error InvalidContent = new(
-        Code: "#COMANDA-EXTERNAL-ERROR-F6945",
+        Code: "#COMANDA-EXTERNAL-ERROR-F6946",
         Description: "AbacatePay returned invalid or malformed content."
     );
 
