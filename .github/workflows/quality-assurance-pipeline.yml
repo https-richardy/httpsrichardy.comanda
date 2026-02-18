@@ -1,0 +1,80 @@
+name: workflow — trigger pull request quality assurance
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      subscriptions: ${{ steps.filter.outputs.subscriptions }}
+      stores: ${{ steps.filter.outputs.stores }}
+      profiles: ${{ steps.filter.outputs.profiles }}
+      payments: ${{ steps.filter.outputs.payments }}
+      orders: ${{ steps.filter.outputs.orders }}
+      orchestrator: ${{ steps.filter.outputs.orchestrator }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: detect changed paths
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            subscriptions:
+              - 'Boundaries/Comanda.Subscriptions/**'
+            stores:
+              - 'Boundaries/Comanda.Stores/**'
+            profiles:
+              - 'Boundaries/Comanda.Profiles/**'
+            payments:
+              - 'Boundaries/Comanda.Payments/**'
+            orders:
+              - 'Boundaries/Comanda.Orders/**'
+            orchestrator:
+              - 'Boundaries/Comanda.Orchestrator/**'
+
+  quality-assurance-subscriptions:
+    needs: changes
+    if: needs.changes.outputs.subscriptions == 'true'
+    uses: ./.github/workflows/reusable-quality-assurance.yml
+    with:
+      service_path: Boundaries/Comanda.Subscriptions
+
+  quality-assurance-stores:
+    needs: changes
+    if: needs.changes.outputs.stores == 'true'
+    uses: ./.github/workflows/reusable-quality-assurance.yml
+    with:
+      service_path: Boundaries/Comanda.Stores
+
+  quality-assurance-profiles:
+    needs: changes
+    if: needs.changes.outputs.profiles == 'true'
+    uses: ./.github/workflows/reusable-quality-assurance.yml
+    with:
+      service_path: Boundaries/Comanda.Profiles
+
+  quality-assurance-payments:
+    needs: changes
+    if: needs.changes.outputs.payments == 'true'
+    uses: ./.github/workflows/reusable-quality-assurance.yml
+    with:
+      service_path: Boundaries/Comanda.Payments
+
+  quality-assurance-orders:
+    needs: changes
+    if: needs.changes.outputs.orders == 'true'
+    uses: ./.github/workflows/reusable-quality-assurance.yml
+    with:
+      service_path: Boundaries/Comanda.Orders
+
+  quality-assurance-orchestrator:
+    needs: changes
+    if: needs.changes.outputs.orchestrator == 'true'
+    uses: ./.github/workflows/reusable-quality-assurance.yml
+    with:
+      service_path: Boundaries/Comanda.Orchestrator
