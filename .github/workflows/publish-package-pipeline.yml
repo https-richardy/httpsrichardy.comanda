@@ -1,0 +1,52 @@
+name: workflow - publish package
+
+on:
+  push:
+    branches:
+      - master
+      - development
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Artifacts/Comanda.Internal.Contracts
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: restore dependencies
+        run: dotnet restore
+
+      - name: build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: set version and pack
+        id: pack
+        run: |
+          BASE_VERSION="1.0"
+
+          if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+            VERSION="${BASE_VERSION}.${GITHUB_RUN_NUMBER}"
+          elif [[ "${GITHUB_REF}" == "refs/heads/development" ]]; then
+            VERSION="${BASE_VERSION}-beta.${GITHUB_RUN_NUMBER}"
+          else
+            echo "branch not configured for publication"
+            exit 1
+          fi
+
+          echo "use version: $VERSION"
+          dotnet pack -c Release -p:PackageVersion=$VERSION -o ./output --no-build
+
+          echo "package_version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: push package to nuget
+        run: dotnet nuget push ./output/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
