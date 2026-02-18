@@ -55,7 +55,6 @@ public sealed class OrdersController(IDispatcher dispatcher) : ControllerBase
             { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status200OK, result.Data),
 
-            /* for tracking purposes: raise error #COMANDA-ERROR-2D7A5 */
             { IsFailure: true } when result.Error == OrderErrors.OrderDoesNotExist =>
                 StatusCode(StatusCodes.Status404NotFound, result.Error)
         };
