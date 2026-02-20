@@ -41,7 +41,6 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
             { IsSuccess: true } =>
                 StatusCode(StatusCodes.Status200OK, result.Data),
 
-            /* for tracking purposes: raise error #COMANDA-ERROR-84F47 */
             { IsFailure: true } when result.Error == EstablishmentErrors.OwnerAlreadyHasEstablishment =>
                 StatusCode(StatusCodes.Status409Conflict, result.Error)
         };
