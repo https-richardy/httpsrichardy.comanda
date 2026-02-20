@@ -38,10 +38,9 @@ public sealed class OwnersController(IDispatcher dispatcher) : ControllerBase
 
         return result switch
         {
-            { IsSuccess: true } =>
+            { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status201Created, result.Data),
 
-            /* for tracking purposes: raise error #COMANDA-ERROR-76A71 */
             { IsFailure: true } when result.Error == ProfileErrors.ProfileAlreadyExists =>
                 StatusCode(StatusCodes.Status409Conflict, result.Error)
         };
