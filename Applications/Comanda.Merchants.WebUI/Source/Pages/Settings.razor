@@ -1,0 +1,64 @@
+@page "/configuracoes"
+
+<PageTitle>Configurações</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudPaper Elevation="0" Class="pa-6 mb-6"
+        Style="border-radius: 12px; border-left: 4px solid var(--mud-palette-primary);">
+        <div class="d-flex align-center">
+            <MudAvatar Color="Color.Primary" Variant="Variant.Filled" Size="Size.Large"
+                Style="background: rgba(var(--mud-palette-primary-rgb), 0.1);">
+                <MudIcon Icon="@Icons.Material.Filled.Settings" Color="Color.Primary" Size="Size.Medium" />
+            </MudAvatar>
+            <div class="ml-4">
+                <MudText Typo="Typo.h4" Style="font-weight: 700;">
+                    Configurações
+                </MudText>
+                <MudText Typo="Typo.body1" Style="opacity: 0.7; margin-top: 4px;">
+                    Gerencie as informações e preferências do seu estabelecimento
+                </MudText>
+            </div>
+        </div>
+    </MudPaper>
+
+    <EstablishmentUpdateForm />
+    <IntegrationCredentialsForm />
+
+    <MudPaper Elevation="0" Class="pa-6 mb-6"
+        Style="border-radius: 12px; border-left: 4px solid var(--mud-palette-error);">
+        <div class="d-flex align-center mb-4">
+            <MudAvatar Color="Color.Error" Variant="Variant.Filled" Size="Size.Large"
+                Style="background: rgba(var(--mud-palette-error-rgb), 0.1);">
+                <MudIcon Icon="@Icons.Material.Filled.Warning" Color="Color.Error" Size="Size.Medium" />
+            </MudAvatar>
+            <div class="ml-3">
+                <MudText Typo="Typo.h6" Style="font-weight: 700;">
+                    Zona de Perigo
+                </MudText>
+                <MudText Typo="Typo.body2" Style="opacity: 0.7;">
+                    Ações irreversíveis que afetam sua conta
+                </MudText>
+            </div>
+        </div>
+
+        <MudDivider Class="my-4" />
+
+        <div class="d-flex justify-space-between align-center">
+            <div>
+                <MudText Typo="Typo.body1" Style="font-weight: 600;">
+                    Cancelar Assinatura
+                </MudText>
+                <MudText Typo="Typo.body2" Style="opacity: 0.6; margin-top: 4px;">
+                    Ao cancelar, você perderá acesso a todos os recursos do sistema
+                </MudText>
+            </div>
+            <MudButton Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium"
+                StartIcon="@Icons.Material.Filled.Cancel" Style="border-radius: 8px;">
+                Cancelar Assinatura
+            </MudButton>
+        </div>
+    </MudPaper>
+</MudContainer>
+
+@code {
+}
