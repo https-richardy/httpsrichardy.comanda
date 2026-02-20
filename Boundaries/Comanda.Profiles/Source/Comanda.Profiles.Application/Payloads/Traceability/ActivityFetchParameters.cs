@@ -6,7 +6,6 @@ public sealed record ActivityFetchParameters :
     public string? Action { get; init; }
     public string? Resource { get; init; }
     public string? UserId { get; init; }
-    public string? RealmId { get; init; }
 
     public PaginationFilters Pagination { get; init; } = new();
     public SortFilters? Sort { get; init; }
