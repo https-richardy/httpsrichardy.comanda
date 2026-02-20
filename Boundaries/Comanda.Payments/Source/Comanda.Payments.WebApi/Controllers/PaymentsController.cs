@@ -48,9 +48,7 @@ public sealed class PaymentsController(IDispatcher dispatcher) : ControllerBase
         // if it is not present, a 400 response is returned
 
         if (string.IsNullOrWhiteSpace(credential))
-        {
             return StatusCode(StatusCodes.Status400BadRequest, PaymentErrors.CredentialNotProvided);
-        }
 
         var result = await dispatcher.DispatchAsync(request, cancellation);
 
