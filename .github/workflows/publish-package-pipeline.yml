@@ -44,11 +44,8 @@ jobs:
 
           if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
             VERSION="${BASE_VERSION}.${GITHUB_RUN_NUMBER}"
-          elif [[ "${GITHUB_REF}" == "refs/heads/development" ]]; then
-            VERSION="${BASE_VERSION}-beta.${GITHUB_RUN_NUMBER}"
           else
-            echo "branch not configured for publication"
-            exit 1
+            VERSION="${BASE_VERSION}-beta.${GITHUB_RUN_NUMBER}"
           fi
 
           echo "use version: $VERSION"
