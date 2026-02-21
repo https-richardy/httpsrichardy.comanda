@@ -56,7 +56,3 @@ Each directory represents an independent system with its own solution, source co
 | CI/CD | GitHub Actions | Autonomous pipelines per bounded context |
 
 </div>
-
----
-
-<img src="https://i.ibb.co/Xf6qcrhW/localhost-3000.png">
