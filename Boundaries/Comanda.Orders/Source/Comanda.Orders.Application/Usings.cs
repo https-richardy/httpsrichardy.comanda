@@ -11,6 +11,7 @@ global using Comanda.Orders.Application.Payloads;
 global using Comanda.Orders.Application.Payloads.Order;
 global using Comanda.Orders.Application.Mappers;
 
+global using HttpsRichardy.Internal.Essentials.Utilities;
 global using HttpsRichardy.Internal.Essentials.Patterns;
 global using HttpsRichardy.Internal.Essentials.Filtering;
 global using HttpsRichardy.Internal.Essentials.Concepts;
