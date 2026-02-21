@@ -7,6 +7,7 @@ public static class OrderMapper
         var order = new Order
         {
             Code = code,
+            Address = scheme.Address,
             Fulfillment = scheme.Fulfillment,
             Priority = scheme.Priority,
             Metadata = scheme.Metadata,
@@ -47,6 +48,7 @@ public static class OrderMapper
     {
         Identifier = order.Id,
         Code = order.Code.Identifier,
+        Address = order.Address,
         Priority = order.Priority,
         Status = order.Status,
         Fulfillment = order.Fulfillment,

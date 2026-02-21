@@ -8,8 +8,7 @@ public sealed class OrderClient(HttpClient httpClient) : IOrderClient
         PropertyNameCaseInsensitive = true
     };
 
-    public async Task<Result<PaginationScheme<OrderScheme>>> GetOrdersAsync(
-        OrdersFetchParameters parameters, CancellationToken cancellation = default)
+    public async Task<Result<PaginationScheme<OrderScheme>>> GetOrdersAsync(OrdersFetchParameters parameters, CancellationToken cancellation = default)
     {
         var queryString = QueryParametersParser.ToQueryString(parameters);
 
@@ -62,8 +61,7 @@ public sealed class OrderClient(HttpClient httpClient) : IOrderClient
         return Result<PaginationScheme<OrderScheme>>.Success(result);
     }
 
-    public async Task<Result<OrderScheme>> CreateOrderAsync(
-        OrderCreationScheme parameters, CancellationToken cancellation = default)
+    public async Task<Result<OrderScheme>> CreateOrderAsync(OrderCreationScheme parameters, CancellationToken cancellation = default)
     {
         var response = await httpClient.PostAsJsonAsync("orders", parameters, cancellation);
         var content = await response.Content.ReadAsStringAsync(cancellation);
