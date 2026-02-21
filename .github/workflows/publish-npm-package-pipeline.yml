@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-latest
 
     defaults:
-    run:
-        working-directory: Artifacts/Comanda.Internal.Sdk
+        run:
+            working-directory: Artifacts/Comanda.Internal.Sdk
 
     steps:
       - name: checkout repository
