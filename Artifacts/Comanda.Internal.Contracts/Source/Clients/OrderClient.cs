@@ -61,8 +61,7 @@ public sealed class OrderClient(HttpClient httpClient) : IOrderClient
         return Result<PaginationScheme<OrderScheme>>.Success(result);
     }
 
-    public async Task<Result<OrderScheme>> CreateOrderAsync(
-        OrderCreationScheme parameters, CancellationToken cancellation = default)
+    public async Task<Result<OrderScheme>> CreateOrderAsync(OrderCreationScheme parameters, CancellationToken cancellation = default)
     {
         var response = await httpClient.PostAsJsonAsync("orders", parameters, cancellation);
         var content = await response.Content.ReadAsStringAsync(cancellation);
