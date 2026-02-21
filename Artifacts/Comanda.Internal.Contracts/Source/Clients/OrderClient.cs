@@ -8,8 +8,7 @@ public sealed class OrderClient(HttpClient httpClient) : IOrderClient
         PropertyNameCaseInsensitive = true
     };
 
-    public async Task<Result<PaginationScheme<OrderScheme>>> GetOrdersAsync(
-        OrdersFetchParameters parameters, CancellationToken cancellation = default)
+    public async Task<Result<PaginationScheme<OrderScheme>>> GetOrdersAsync(OrdersFetchParameters parameters, CancellationToken cancellation = default)
     {
         var queryString = QueryParametersParser.ToQueryString(parameters);
 
