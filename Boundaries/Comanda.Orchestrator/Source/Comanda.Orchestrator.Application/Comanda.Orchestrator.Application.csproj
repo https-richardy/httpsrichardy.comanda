@@ -10,7 +10,7 @@
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="HttpsRichardy.Dispatcher" Version="1.0.2" />
     <PackageReference Include="HttpsRichardy.Federation.Sdk.Contracts" Version="1.0.2" />
-    <PackageReference Include="Comanda.Internal.Contracts" Version="1.0.1" />
+    <PackageReference Include="Comanda.Internal.Contracts" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>
