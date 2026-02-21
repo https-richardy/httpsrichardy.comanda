@@ -1,5 +1,4 @@
 import { AxiosInstance } from "axios";
-
 import { Result } from "../patterns/result";
 import { Error } from "../patterns/error";
 
