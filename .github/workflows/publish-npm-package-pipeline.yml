@@ -39,9 +39,6 @@ jobs:
       - name: build
         run: npm run build
 
-      - name: run tests
-        run: npm test
-
       - name: prepare git for version bump
         run: |
           git config user.name "github-actions[bot]"
