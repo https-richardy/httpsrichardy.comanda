@@ -5,13 +5,22 @@ on:
     branches:
       - master
       - development
+    paths:
+      - 'Artifacts/Comanda.Internal.Sdk/**'
+
+  pull_request:
+    branches:
+      - master
+      - development
+    paths:
+      - 'Artifacts/Comanda.Internal.Sdk/**'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     defaults:
-      run:
+    run:
         working-directory: Artifacts/Comanda.Internal.Sdk
 
     steps:
@@ -32,6 +41,26 @@ jobs:
 
       - name: run tests
         run: npm test
+
+      - name: prepare git for version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "ci: prepare repository for version bump" || echo "no changes to commit"
+
+      - name: bump version
+        run: |
+          if [ "${{ github.ref_name }}" = "master" ]; then
+            npm version minor -m "ci: bump minor version to %s"
+          elif [ "${{ github.ref_name }}" = "development" ]; then
+            npm version patch -m "ci: bump patch version to %s"
+          fi
+
+      - name: publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: prepare git for version bump
         run: |
