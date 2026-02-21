@@ -4,7 +4,7 @@ public sealed class Order : Aggregate
 {
     public Code Code { get; set; } = default!;
     public Metadata Metadata { get; set; } = default!;
-    public Address Address { get; set; } = default!;
+    public Address? Address { get; set; } = default!;
 
     public Status Status { get; set; } = Status.Pending;
     public Priority Priority { get; set; } = Priority.Normal;
