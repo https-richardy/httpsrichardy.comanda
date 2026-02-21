@@ -1,0 +1,16 @@
+node_modules/
+.git/
+.gitignore
+source/
+tsconfig.json
+*.ts
+!dist/**/*.d.ts
+.eslintrc.json
+.prettierrc.json
+jest.config.js
+scripts/
+.vscode/
+.DS_Store
+*.log
+npm-debug.log*
+yarn-error.log*
