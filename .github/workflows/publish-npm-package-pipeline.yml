@@ -1,0 +1,41 @@
+name: workflow - publish npm comanda sdk package
+
+on:
+  push:
+    branches:
+      - master
+      - development
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Artifacts/Comanda.Internal.Sdk
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: setup node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: install dependencies
+        run: npm install
+
+      - name: build
+        run: npm run build
+
+      - name: run tests
+        run: npm test
+
+      - name: prepare git for version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "ci: prepare repository for version bump" || echo "no changes to commit"
