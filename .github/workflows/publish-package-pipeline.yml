@@ -7,6 +7,12 @@ on:
       - development
     paths:
       - 'Artifacts/Comanda.Internal.Contracts/**'
+  pull_request:
+    branches:
+      - master
+      - development
+    paths:
+      - 'Artifacts/Comanda.Internal.Contracts/**'
 
 jobs:
   publish:
