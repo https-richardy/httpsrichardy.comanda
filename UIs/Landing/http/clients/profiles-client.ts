@@ -10,7 +10,7 @@ export class ProfilesClient {
     }
 
     public async createOwner(parameters: ProfileCreationScheme): Promise<Result<OwnerScheme>> {
-        var response = await this.httpClient.post("/api/v1/profiles/owner", parameters);
+        var response = await this.httpClient.post("/api/v1/profiles/owners", parameters);
         if (response.status < 200 || response.status >= 300) {
             return Result.failure<OwnerScheme>(response.data);
         }
