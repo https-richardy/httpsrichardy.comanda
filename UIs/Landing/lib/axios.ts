@@ -5,7 +5,8 @@ export const httpClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
         "Content-Type": "application/json"
-    }
+    },
+    validateStatus: () => true
 });
 
 export const federationClient = axios.create({
@@ -13,9 +14,9 @@ export const federationClient = axios.create({
     headers: {
         "Content-Type": "application/json",
         "Realm": process.env.NEXT_PUBLIC_REALM
-    }
+    },
+    validateStatus: () => true
 });
-
 
 httpClient.interceptors.request.use((configuration) => {
     const token = typeof window !== "undefined"
