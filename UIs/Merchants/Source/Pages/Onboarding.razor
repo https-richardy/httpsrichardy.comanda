@@ -1,0 +1,70 @@
+@page "/onboarding"
+@layout MainLayout
+
+@inject ILocalStorageGateway localStorage
+@inject IStoreClient storeClient
+@inject NavigationManager navigationManager
+
+<PageTitle>Onboarding</PageTitle>
+
+@if (isLoading)
+{
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4 d-flex justify-center align-center" Style="min-height: 400px;">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+    </MudContainer>
+}
+else if (!hasEstablishment)
+{
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+        <MudPaper Elevation="0" Class="pa-6 mb-6"
+            Style="border-radius: 12px; border-left: 4px solid var(--mud-palette-primary);">
+            <div class="d-flex align-center">
+                <MudAvatar Color="Color.Primary" Variant="Variant.Filled" Size="Size.Large"
+                    Style="background: rgba(var(--mud-palette-primary-rgb), 0.1);">
+                    <MudIcon Icon="@Icons.Material.Filled.Store" Color="Color.Primary" Size="Size.Medium" />
+                </MudAvatar>
+                <div class="ml-4">
+                    <MudText Typo="Typo.h4" Style="font-weight: 700;">
+                        Bem-vindo!
+                    </MudText>
+                    <MudText Typo="Typo.body1" Style="opacity: 0.7; margin-top: 4px;">
+                        Vamos começar criando seu estabelecimento
+                    </MudText>
+                </div>
+            </div>
+        </MudPaper>
+        <OnboardingForm />
+    </MudContainer>
+}
+
+@code {
+    private bool hasEstablishment = true;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        isLoading = true;
+
+        var owner = await localStorage.GetAsync<OwnerScheme>(Storage.Merchant);
+        if (owner is null)
+        {
+            isLoading = false;
+            return;
+        }
+
+        var establishments = await storeClient.GetEstablishmentsAsync(new() { OwnerId = owner.Identifier });
+        var establishment = establishments.Data?.Items.FirstOrDefault();
+
+        hasEstablishment = establishment is not null;
+
+        if (hasEstablishment)
+        {
+            navigationManager.NavigateTo("/");
+            return;
+        }
+
+        isLoading = false;
+    }
+}

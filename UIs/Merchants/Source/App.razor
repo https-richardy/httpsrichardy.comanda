@@ -1,0 +1,80 @@
+﻿@inject IProfilesClient profilesClient
+@inject IPrincipalProvider principalProvider
+@inject IStoreClient storeClient
+@inject ISessionManager sessionManager
+@inject IIdentityClient identityClient
+@inject ILocalStorageGateway localStorage
+@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navigationManager
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Pages.NotFound)">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <NotAuthorized />
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+    </Router>
+</CascadingAuthenticationState>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await InitializeMockSessionAsync();
+        await SetPrincipalAsync();
+
+        var session = await authenticationStateProvider.GetAuthenticationStateAsync();
+        var principal = session.User;
+
+        if (principal?.Identity?.IsAuthenticated is true)
+        {
+            var identifier = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var owners = await profilesClient.GetOwnersAsync(new() { UserId = identifier! });
+
+            var owner = owners?.Data?.Items.FirstOrDefault();
+            if (owner is null)
+                return;
+
+            var establishments = await storeClient.GetEstablishmentsAsync(new() { OwnerId = owner.Identifier });
+            var establishment = establishments?.Data?.Items.FirstOrDefault();
+
+            if (establishment is null)
+            {
+                navigationManager.NavigateTo("/onboarding");
+                return;
+            }
+
+            await localStorage.SetAsync<EstablishmentScheme>(Storage.Establishment, establishment);
+            await localStorage.SetAsync<OwnerScheme>(Storage.Merchant, owner);
+        }
+
+    }
+
+    private async Task SetPrincipalAsync()
+    {
+        var principal = await principalProvider.GetPrincipalAsync();
+        if (principal.IsFailure || principal.Data is null)
+            return;
+
+        await localStorage.SetAsync<PrincipalScheme>(Storage.Principal, principal.Data);
+    }
+
+    private async Task InitializeMockSessionAsync()
+    {
+        var authentication = await identityClient.AuthenticateAsync(new()
+        {
+            Username = "jane.doe@email.com",
+            Password = "password"
+        });
+
+        if (authentication.IsFailure || authentication.Data is null)
+            return;
+
+        await sessionManager.SignInAsync(authentication.Data.AccessToken, authentication.Data.RefreshToken);
+    }
+}

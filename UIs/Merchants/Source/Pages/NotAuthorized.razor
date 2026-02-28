@@ -1,0 +1,28 @@
+﻿@page "/not-authorized"
+@layout MainLayout
+
+<PageTitle>Não Autorizado</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex flex-column align-center justify-center" Style="min-height: 70vh;">
+    <MudText Typo="Typo.h1" 
+             Color="Color.Inherit" 
+             Style="font-size: 8rem; font-weight: 700; line-height: 1; margin-top: 1rem;">
+        403
+    </MudText>
+
+    <MudText Typo="Typo.h5"  Color="Color.Inherit" Align="Align.Center" Style="margin-top: 1rem; opacity: 0.8;">
+        Você não está autorizado
+    </MudText>
+
+    <MudText Typo="Typo.body1" Color="Color.Inherit" Align="Align.Center" Style="margin-top: 1rem; opacity: 0.6; max-width: 400px;">
+        Você não possui permissão para acessar esta página. Entre em contato com o administrador se acredita que isso é um erro.
+    </MudText>
+
+    <MudButton Variant="Variant.Outlined"
+               Color="Color.Inherit"
+               StartIcon="@Icons.Material.Outlined.Home"
+               Href="/"
+               Style="margin-top: 2rem;">
+        Voltar para o início
+    </MudButton>
+</MudContainer>

@@ -1,0 +1,68 @@
+@inject IConfiguration configuration
+
+<div class="product-gallery">
+    @foreach (var product in Products)
+    {
+        <ProductCard ProductId="@product.Id" Name="@product.Name" Description="@product.Description" Price="@product.Price"
+            ImageUrl="@GetFullImageUrl(product.ImageUrl)" OnEdit="@HandleEdit" OnDelete="@HandleDelete" />
+    }
+
+    @if (!Products.Any())
+    {
+        <MudPaper Elevation="0" Class="pa-8" Style="border-radius: 12px; text-align: center;">
+            <MudIcon Icon="@Icons.Material.Outlined.Inventory2" Color="Color.Default" Size="Size.Large"
+                Style="opacity: 0.3; font-size: 4rem;" />
+            <MudText Typo="Typo.h6" Style="opacity: 0.6; margin-top: 1rem;">
+                Nenhum produto cadastrado
+            </MudText>
+            <MudText Typo="Typo.body2" Style="opacity: 0.5; margin-top: 0.5rem;">
+                Adicione produtos para começar a vender
+            </MudText>
+        </MudPaper>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<ProductModel> Products { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<string> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDelete { get; set; }
+
+    private async Task HandleEdit(string productId)
+    {
+        await OnEdit.InvokeAsync(productId);
+    }
+
+    private async Task HandleDelete(string productId)
+    {
+        await OnDelete.InvokeAsync(productId);
+    }
+
+    private string GetFullImageUrl(string imageUrl)
+    {
+        if (string.IsNullOrEmpty(imageUrl))
+            return string.Empty;
+
+        var blobUrl = configuration["Settings:Blob"];
+        if (string.IsNullOrEmpty(blobUrl))
+            return imageUrl;
+
+        blobUrl = blobUrl.TrimEnd('/');
+        imageUrl = imageUrl.TrimStart('/');
+
+        return $"{blobUrl}/{imageUrl}";
+    }
+
+    public class ProductModel
+    {
+        public string Id { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
+    }
+}

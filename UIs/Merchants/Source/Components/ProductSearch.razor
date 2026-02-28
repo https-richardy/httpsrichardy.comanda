@@ -1,0 +1,107 @@
+<div class="mb-4">
+    <div class="d-flex flex-column gap-3">
+        <MudGrid Spacing="3">
+            <MudItem xs="12" sm="12" md="6">
+                <MudTextField @bind-Value="_searchTitle" Label="Nome do Produto" Variant="Variant.Outlined"
+                    Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Search"
+                    Placeholder="Ex: Pizza Margherita" Immediate="false" DebounceInterval="500"
+                    OnDebounceIntervalElapsed="@OnSearchChanged" Clearable="true" Margin="Margin.Dense" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudNumericField @bind-Value="_minPrice" Label="Preço Mínimo" Variant="Variant.Outlined"
+                    Adornment="Adornment.Start" AdornmentText="R$" Min="0" Format="N2" Placeholder="0,00"
+                    Clearable="true" Margin="Margin.Dense" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudNumericField @bind-Value="_maxPrice" Label="Preço Máximo" Variant="Variant.Outlined"
+                    Adornment="Adornment.Start" AdornmentText="R$" Min="0" Format="N2" Placeholder="0,00"
+                    Clearable="true" Margin="Margin.Dense" />
+            </MudItem>
+        </MudGrid>
+
+        <div class="d-flex justify-end gap-2">
+            <MudButton Variant="Variant.Text" Color="Color.Default" StartIcon="@Icons.Material.Outlined.Clear"
+                OnClick="@HandleClearAll" Size="Size.Small" Style="text-transform: none;">
+                Limpar Filtros
+            </MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" StartIcon="@Icons.Material.Outlined.Search"
+                OnClick="@ApplyFilters" Size="Size.Small" Style="text-transform: none;">
+                Buscar
+            </MudButton>
+        </div>
+
+        @if (HasActiveFilters)
+        {
+            <div class="d-flex align-center gap-2 mt-2 pa-2"
+                Style="background: rgba(var(--mud-palette-primary-rgb), 0.08); border-radius: 8px;">
+                <MudIcon Icon="@Icons.Material.Outlined.FilterAlt" Color="Color.Primary" Size="Size.Small" />
+                <MudText Typo="Typo.body2" Color="Color.Primary" Style="font-weight: 500;">
+                    @GetActiveFiltersText()
+                </MudText>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private string? _searchTitle;
+    private decimal? _minPrice;
+    private decimal? _maxPrice;
+
+    [Parameter, EditorRequired]
+    public required ProductsFetchParameters Filters { get; set; }
+
+    [Parameter]
+    public EventCallback<ProductsFetchParameters> OnFiltersChanged { get; set; }
+
+    private bool HasActiveFilters => !string.IsNullOrWhiteSpace(_searchTitle) ||
+        _minPrice.HasValue ||
+        _maxPrice.HasValue;
+
+    protected override void OnParametersSet()
+    {
+        _searchTitle = Filters.Title;
+        _minPrice = Filters.MinPrice;
+        _maxPrice = Filters.MaxPrice;
+    }
+
+    private async Task OnSearchChanged() => await ApplyFilters();
+    private async Task ApplyFilters()
+    {
+        var updatedFilters = Filters with
+        {
+            Title = string.IsNullOrWhiteSpace(_searchTitle) ? null : _searchTitle.Trim(),
+            MinPrice = _minPrice,
+            MaxPrice = _maxPrice
+        };
+
+        await OnFiltersChanged.InvokeAsync(updatedFilters);
+    }
+
+    private async Task HandleClearAll()
+    {
+        _searchTitle = null;
+        _minPrice = null;
+        _maxPrice = null;
+
+        await ApplyFilters();
+    }
+
+    private string GetActiveFiltersText()
+    {
+        var filters = new List<string>();
+
+        if (!string.IsNullOrWhiteSpace(_searchTitle))
+            filters.Add($"Título: \"{_searchTitle}\"");
+
+        if (_minPrice.HasValue)
+            filters.Add($"Min: {_minPrice:C2}");
+
+        if (_maxPrice.HasValue)
+            filters.Add($"Max: {_maxPrice:C2}");
+
+        return $"Filtros ativos: {string.Join(" | ", filters)}";
+    }
+}

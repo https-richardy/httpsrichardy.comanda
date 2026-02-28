@@ -1,0 +1,120 @@
+@inject IStoreClient storeClient
+@inject IProfilesClient profilesClient
+@inject ILocalStorageGateway localStorage
+@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navigationManager
+@inject ISnackbar snackbar
+
+<EditForm Model="@_model" OnValidSubmit="HandleSubmitAsync">
+    <DataAnnotationsValidator />
+
+    <MudPaper Elevation="0" Class="pa-6" Style="border-radius: 12px;">
+        <MudText Typo="Typo.h6" Style="font-weight: 700;" Class="mb-1">
+            Informações do Estabelecimento
+        </MudText>
+        <MudText Typo="Typo.body2" Style="opacity: 0.6;" Class="mb-4">
+            Cadastre seu estabelecimento para começar a usar o sistema
+        </MudText>
+
+        <MudGrid Spacing="3">
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_model.Title" 
+                              Label="Nome do Estabelecimento" 
+                              Variant="Variant.Outlined"
+                              FullWidth="true" 
+                              Margin="Margin.Dense"
+                              Required="true"
+                              For="@(() => _model.Title)"
+                              HelperText="Nome que seus clientes irão ver" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_model.Description" 
+                              Label="Descrição" 
+                              Variant="Variant.Outlined"
+                              FullWidth="true" 
+                              Margin="Margin.Dense"
+                              Lines="3"
+                              Required="true"
+                              For="@(() => _model.Description)"
+                              HelperText="Uma breve descrição do seu negócio" />
+            </MudItem>
+        </MudGrid>
+
+        <MudDivider Class="my-4" />
+
+        <div class="d-flex justify-end gap-2">
+            <MudButton Variant="Variant.Filled" 
+                       Color="Color.Primary" 
+                       Size="Size.Large"
+                       ButtonType="ButtonType.Submit"
+                       Disabled="@_isSubmitting"
+                       Style="border-radius: 8px;">
+
+                @if (_isSubmitting)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Criando...</MudText>
+                }
+                else
+                {
+                    <MudText>Criar Estabelecimento</MudText>
+                }
+            </MudButton>
+        </div>
+    </MudPaper>
+</EditForm>
+
+@code {
+    private EstablishmentFormScheme _model = new();
+    private bool _isSubmitting = false;
+
+    private async Task HandleSubmitAsync()
+    {
+        var authentication = await authenticationStateProvider.GetAuthenticationStateAsync();
+        var principal = authentication.User;
+
+        if (principal?.Identity?.IsAuthenticated is not true)
+        {
+            snackbar.Add("Você precisa estar autenticado para criar um estabelecimento", Severity.Error);
+            return;
+        }
+
+        var identifier = principal.FindFirst("sub")?.Value;
+        if (string.IsNullOrEmpty(identifier))
+        {
+            snackbar.Add("Erro ao identificar o usuário", Severity.Error);
+            return;
+        }
+
+        var ownersResponse = await profilesClient.GetOwnersAsync(new() { UserId = identifier });
+        if (ownersResponse?.Data?.Items is null || !ownersResponse.Data.Items.Any())
+        {
+            snackbar.Add("Erro ao buscar informações do proprietário", Severity.Error);
+            return;
+        }
+
+        var owner = ownersResponse.Data.Items.First();
+        var scheme = new EstablishmentCreationScheme
+        {
+            Title = _model.Title,
+            Description = _model.Description,
+            Owner = new(owner.Identifier, owner.Email)
+        };
+
+        var result = await storeClient.CreateEstablishmentAsync(scheme);
+        if (result.IsFailure || result.Data is null)
+        {
+            snackbar.Add($"Erro ao criar estabelecimento ({result.Error.Code})", Severity.Error);
+            return;
+        }
+
+        await localStorage.SetAsync<EstablishmentScheme>(Storage.Establishment, result.Data);
+        await localStorage.SetAsync<OwnerScheme>(Storage.Merchant, owner);
+
+        snackbar.Add("Estabelecimento criado com sucesso!", Severity.Success);
+        navigationManager.NavigateTo("/");
+
+        _isSubmitting = false;
+    }
+}

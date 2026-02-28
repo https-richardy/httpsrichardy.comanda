@@ -1,0 +1,20 @@
+<MudDialog>
+    <DialogContent>
+        <ProductCreationForm OnSuccess="@HandleSuccess" OnCancel="@HandleCancel" />
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void HandleSuccess()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void HandleCancel()
+    {
+        MudDialog.Cancel();
+    }
+}

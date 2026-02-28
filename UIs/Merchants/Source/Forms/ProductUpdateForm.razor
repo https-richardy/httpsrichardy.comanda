@@ -1,0 +1,110 @@
+@inject IStoreClient storeClient
+@inject ILocalStorageGateway localStorage
+@inject ISnackbar snackbar
+
+<EditForm Model="@_model" OnValidSubmit="HandleSubmitAsync">
+    <DataAnnotationsValidator />
+
+    <MudStack Spacing="3">
+        <MudTextField @bind-Value="_model.Title" Label="Título" Variant="Variant.Outlined" Class="mt-4" FullWidth="true"
+            Margin="Margin.Dense" Required="true" For="@(() => _model.Title)"
+            HelperText="Nome do produto que aparecerá no cardápio" />
+
+        <MudTextField @bind-Value="_model.Description" Label="Descrição" Variant="Variant.Outlined" FullWidth="true"
+            Margin="Margin.Dense" Lines="4" Required="true" For="@(() => _model.Description)"
+            HelperText="Descreva os ingredientes e características" />
+
+        <MudNumericField @bind-Value="_model.Price" Label="Preço" Variant="Variant.Outlined" FullWidth="true"
+            Margin="Margin.Dense" Required="true" For="@(() => _model.Price)" Format="N2"
+            Culture="@(new System.Globalization.CultureInfo("pt-BR"))" Adornment="Adornment.Start" AdornmentText="R$"
+            HelperText="Valor do produto em reais" Min="0.01m" />
+
+        <MudDivider Class="my-2" />
+
+        <div class="d-flex justify-end gap-2">
+            <MudButton Variant="Variant.Text" Color="Color.Default" OnClick="@(() => OnCancel.InvokeAsync())"
+                Disabled="@_isSubmitting" Style="border-radius: 8px;">
+                Cancelar
+            </MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" ButtonType="ButtonType.Submit"
+                Disabled="@_isSubmitting" Style="border-radius: 8px;">
+                @if (_isSubmitting)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Salvando...</MudText>
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Outlined.Save" Class="me-2" />
+                    <MudText>Salvar</MudText>
+                }
+            </MudButton>
+        </div>
+    </MudStack>
+</EditForm>
+
+@code {
+    [Parameter]
+    public string ProductId { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback OnSuccess { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    private ProductUpdateFormScheme _model = new();
+    private bool _isSubmitting = false;
+
+    protected override void OnParametersSet()
+    {
+        if (Product is not null)
+        {
+            _model = new ProductUpdateFormScheme
+            {
+                Title = Product.Title,
+                Description = Product.Description,
+                Price = Product.Price
+            };
+        }
+    }
+
+    [Parameter]
+    public ProductScheme? Product { get; set; }
+
+    private async Task HandleSubmitAsync()
+    {
+        _isSubmitting = true;
+
+        var establishment = await localStorage.GetAsync<EstablishmentScheme>(Storage.Establishment);
+        if (establishment is null)
+        {
+            snackbar.Add("Erro ao identificar o estabelecimento", Severity.Error);
+            _isSubmitting = false;
+            return;
+        }
+
+        var modificationScheme = new ProductModificationScheme
+        {
+            EstablishmentId = establishment.Identifier,
+            ProductId = ProductId,
+            Title = _model.Title,
+            Description = _model.Description,
+            Price = _model.Price
+        };
+
+        var result = await storeClient.UpdateProductAsync(modificationScheme);
+        if (!result.IsSuccess || result.Data is null)
+        {
+            snackbar.Add($"Erro ao atualizar produto ({result.Error.Code})", Severity.Error);
+            _isSubmitting = false;
+            return;
+        }
+
+        snackbar.Add("Produto atualizado com sucesso!", Severity.Success);
+
+        await OnSuccess.InvokeAsync();
+
+        _isSubmitting = false;
+    }
+}
