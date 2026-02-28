@@ -1,0 +1,22 @@
+@inject IJSRuntime javascript
+
+<div class="pa-3" style="margin-top: auto;">
+    <MudDivider Class="mb-3" />
+
+    <MudButton OnClick="OpenWhatsApp" Variant="Variant.Text" Color="Color.Primary"
+        StartIcon="@Icons.Material.Filled.SupportAgent" Size="Size.Small" FullWidth="true"
+        Style="justify-content: flex-start; padding: 8px 12px; font-size: 0.75rem; text-transform: none;">
+        Falar com suporte
+    </MudButton>
+</div>
+
+@code {
+    private async Task OpenWhatsApp()
+    {
+        var message = @"Olá, preciso de suporte com o comanda";
+        var encodedMessage = Uri.EscapeDataString(message);
+        var whatsappUrl = $"https://wa.me/5521988547794?text={encodedMessage}";
+
+        await javascript.InvokeVoidAsync("open", whatsappUrl, "_blank");
+    }
+}

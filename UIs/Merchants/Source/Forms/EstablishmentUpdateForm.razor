@@ -1,0 +1,195 @@
+@inject IStoreClient storeClient
+@inject ILocalStorageGateway localStorage
+@inject ISnackbar snackbar
+
+<EditForm Model="@_establishment" OnValidSubmit="HandleSubmitAsync">
+    <DataAnnotationsValidator />
+
+    <MudPaper Elevation="0" Class="pa-6 mb-4" Style="border-radius: 12px;">
+        <MudText Typo="Typo.h6" Style="font-weight: 700;" Class="mb-1">
+            Informações do Estabelecimento
+        </MudText>
+        <MudText Typo="Typo.body2" Style="opacity: 0.6;" Class="mb-4">
+            Configure o nome e descrição que aparecerão para seus clientes
+        </MudText>
+
+        <MudGrid Spacing="3">
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_establishment.Title" Label="Nome do Estabelecimento"
+                    Variant="Variant.Outlined" FullWidth="true" Margin="Margin.Dense" Required="true"
+                    For="@(() => _establishment.Title)" HelperText="Nome que seus clientes irão ver" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_establishment.Description" Label="Descrição" Variant="Variant.Outlined"
+                    FullWidth="true" Margin="Margin.Dense" Lines="3" Required="true"
+                    For="@(() => _establishment.Description)" HelperText="Uma breve descrição do seu negócio" />
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    <MudPaper Elevation="0" Class="pa-6 mb-4" Style="border-radius: 12px;">
+        <MudText Typo="Typo.h6" Style="font-weight: 700;" Class="mb-1">
+            Identidade Visual
+        </MudText>
+        <MudText Typo="Typo.body2" Style="opacity: 0.6;" Class="mb-4">
+            Personalize as cores do seu estabelecimento
+        </MudText>
+
+        <MudGrid Spacing="3">
+            <MudItem xs="12" md="6">
+                <div class="d-flex flex-column">
+                    <MudTextField @bind-Value="_establishment.PrimaryColor" Label="Cor Primária"
+                        Variant="Variant.Outlined" FullWidth="true" Margin="Margin.Dense" Placeholder="#4a1998"
+                        For="@(() => _establishment.PrimaryColor)" HelperText="Clique no ícone para escolher a cor"
+                        Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ColorLens"
+                        OnAdornmentClick="() => _showPrimaryColorPicker = !_showPrimaryColorPicker"
+                        AdornmentColor="Color.Inherit" />
+
+                    @if (_showPrimaryColorPicker)
+                    {
+                        <MudColorPicker @bind-Text="_establishment.PrimaryColor" ColorPickerMode="ColorPickerMode.HEX"
+                            Class="mt-2" DisableAlpha="true" DisableToolbar="false" />
+                    }
+
+                    @if (!string.IsNullOrEmpty(_establishment.PrimaryColor))
+                    {
+                        <MudPaper Class="pa-3 mt-2 d-flex align-center"
+                            Style="@($"background: {_establishment.PrimaryColor}; border-radius: 8px; min-height: 50px;")">
+                            <MudText Typo="Typo.body2" Style="color: white; font-weight: 600;">
+                                Preview da Cor Primária
+                            </MudText>
+                        </MudPaper>
+                    }
+                </div>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <div class="d-flex flex-column">
+                    <MudTextField @bind-Value="_establishment.SecondaryColor" Label="Cor Secundária"
+                        Variant="Variant.Outlined" FullWidth="true" Margin="Margin.Dense" Placeholder="#ec4899"
+                        For="@(() => _establishment.SecondaryColor)" HelperText="Clique no ícone para escolher a cor"
+                        Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ColorLens"
+                        OnAdornmentClick="() => _showSecondaryColorPicker = !_showSecondaryColorPicker"
+                        AdornmentColor="Color.Inherit" />
+
+                    @if (_showSecondaryColorPicker)
+                    {
+                        <MudColorPicker @bind-Text="_establishment.SecondaryColor" ColorPickerMode="ColorPickerMode.HEX"
+                            Class="mt-2" DisableAlpha="true" DisableToolbar="false" />
+                    }
+
+                    @if (!string.IsNullOrEmpty(_establishment.SecondaryColor))
+                    {
+                        <MudPaper Class="pa-3 mt-2 d-flex align-center"
+                            Style="@($"background: {_establishment.SecondaryColor}; border-radius: 8px; min-height: 50px;")">
+                            <MudText Typo="Typo.body2" Style="color: white; font-weight: 600;">
+                                Preview da Cor Secundária
+                            </MudText>
+                        </MudPaper>
+                    }
+                </div>
+            </MudItem>
+        </MudGrid>
+
+        <MudDivider Class="my-4" />
+
+        <div class="d-flex justify-end gap-2">
+            <MudButton Variant="Variant.Outlined" Color="Color.Default" Size="Size.Medium" OnClick="HandleCancelAsync"
+                Disabled="@_isSubmitting" Style="border-radius: 8px;">
+                Cancelar
+            </MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Inherit" Size="Size.Medium"
+                ButtonType="ButtonType.Submit" Disabled="@_isSubmitting" StartIcon="@Icons.Material.Outlined.Save"
+                Style="border-radius: 8px;">
+                @if (_isSubmitting)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Salvando...</MudText>
+                }
+                else
+                {
+                    <MudText>Salvar Alterações</MudText>
+                }
+            </MudButton>
+        </div>
+    </MudPaper>
+</EditForm>
+
+@code {
+    private EstablishmentUpdateFormScheme _establishment = new();
+    private EstablishmentScheme? _currentEstablishment;
+
+    private bool _isSubmitting = false;
+    private bool _showPrimaryColorPicker = false;
+    private bool _showSecondaryColorPicker = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadEstablishmentDataAsync();
+    }
+
+    private async Task LoadEstablishmentDataAsync()
+    {
+        _currentEstablishment = await localStorage.GetAsync<EstablishmentScheme>(Storage.Establishment);
+        if (_currentEstablishment is not null)
+        {
+            _establishment.Title = _currentEstablishment.Title ?? string.Empty;
+            _establishment.Description = _currentEstablishment.Description ?? string.Empty;
+            _establishment.PrimaryColor = _currentEstablishment.Branding?.PrimaryColor ?? "#5B21B6";
+            _establishment.SecondaryColor = _currentEstablishment.Branding?.SecondaryColor ?? "#EC4899";
+        }
+    }
+
+    private async Task HandleSubmitAsync()
+    {
+        if (_currentEstablishment is null)
+        {
+            snackbar.Add("Não foi possível identificar o estabelecimento", Severity.Error);
+            return;
+        }
+
+        _isSubmitting = true;
+
+        var primaryColor = _establishment.PrimaryColor?.Length == 9
+            ? _establishment.PrimaryColor.Substring(0, 7)
+            : _establishment.PrimaryColor;
+
+        var secondaryColor = _establishment.SecondaryColor?.Length == 9
+            ? _establishment.SecondaryColor.Substring(0, 7)
+            : _establishment.SecondaryColor;
+
+        var modificationScheme = new EstablishmentModificationScheme
+        {
+            EstablishmentId = _currentEstablishment.Identifier,
+            Title = _establishment.Title,
+            Description = _establishment.Description,
+            Branding = new Branding(primaryColor ?? "#5B21B6", secondaryColor ?? "#EC4899", "https://placehold.co/600x400.png")
+        };
+
+        var result = await storeClient.UpdateEstablishmentAsync(modificationScheme);
+        if (result.IsFailure || result.Data is null)
+        {
+            snackbar.Add($"Erro ao atualizar estabelecimento: {result.Error.Code}", Severity.Error);
+            _isSubmitting = false;
+            return;
+        }
+
+        await localStorage.SetAsync<EstablishmentScheme>(Storage.Establishment, result.Data);
+
+        _currentEstablishment = result.Data;
+        _isSubmitting = false;
+
+        snackbar.Add("Estabelecimento atualizado com sucesso!", Severity.Success);
+    }
+
+    private async Task HandleCancelAsync()
+    {
+        await LoadEstablishmentDataAsync();
+
+        _showPrimaryColorPicker = false;
+        _showSecondaryColorPicker = false;
+
+        snackbar.Add("Alterações canceladas", Severity.Info);
+    }
+}

@@ -1,0 +1,65 @@
+@typeparam TItem
+
+<div class="pagination-container">
+    @if (Data?.Items is not null && Data.Items.Any())
+    {
+        @Content(Data.Items)
+
+        @if (Data.TotalPages > 1)
+        {
+            <div class="d-flex justify-center align-center mt-6">
+                <MudPagination 
+                    Count="@Data.TotalPages" 
+                    Selected="@Data.PageNumber"
+                    SelectedChanged="@HandlePageChanged"
+                    Color="Color.Primary" 
+                    Size="Size.Large" 
+                    ShowFirstButton="true" 
+                    ShowLastButton="true" 
+                    BoundaryCount="1"
+                    MiddleCount="3" />
+            </div>
+
+            <div class="d-flex justify-center mt-3">
+                <MudText Typo="Typo.body2" Style="opacity: 0.6;">
+                    Mostrando @GetStartItem() até @GetEndItem() de @Data.Total itens
+                </MudText>
+            </div>
+        }
+    }
+    else
+    {
+        @EmptyContent
+    }
+</div>
+
+@code {
+    [Parameter]
+    public PaginationScheme<TItem>? Data { get; set; }
+
+    [Parameter]
+    public RenderFragment<IReadOnlyCollection<TItem>> Content { get; set; } = null!;
+
+    [Parameter]
+    public RenderFragment EmptyContent { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<int> OnPageChanged { get; set; }
+
+    private async Task HandlePageChanged(int pageNumber)
+    {
+        await OnPageChanged.InvokeAsync(pageNumber - 1);
+    }
+
+    private int GetStartItem()
+    {
+        if (Data is null || Data.PageNumber < 1) return 0;
+        return ((Data.PageNumber - 1) * Data.PageSize) + 1;
+    }
+
+    private int GetEndItem()
+    {
+        if (Data is null) return 0;
+        return Math.Min(Data.PageNumber * Data.PageSize, Data.Total);
+    }
+}

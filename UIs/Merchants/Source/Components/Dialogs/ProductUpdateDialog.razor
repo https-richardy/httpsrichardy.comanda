@@ -1,0 +1,28 @@
+@inject IDialogService DialogService
+
+<MudDialog>
+    <DialogContent>
+        <ProductUpdateForm ProductId="@ProductId" Product="@Product" OnSuccess="@HandleSuccess" OnCancel="@HandleCancel" />
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public ProductScheme? Product { get; set; }
+
+    [Parameter]
+    public string ProductId { get; set; } = string.Empty;
+
+    private void HandleSuccess()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void HandleCancel()
+    {
+        MudDialog.Cancel();
+    }
+}
