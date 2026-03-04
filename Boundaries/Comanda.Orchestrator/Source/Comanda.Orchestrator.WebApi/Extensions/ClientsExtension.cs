@@ -9,6 +9,7 @@ public static class ClientsExtension
 
         // registers the header propagation service
         // essential for receiving an authenticated request and forwarding it to another service
+        services.AddTransient<CorrelationInterceptor>();
         services.AddHeaderPropagation(options =>
         {
             options.Headers.Add(Headers.Authorization);
@@ -63,14 +64,27 @@ public static class ClientsExtension
         });
 
         customersClient.AddHeaderPropagation();
+        customersClient.AddHttpMessageHandler<CorrelationInterceptor>();
+
         ownersClient.AddHeaderPropagation();
+        ownersClient.AddHttpMessageHandler<CorrelationInterceptor>();
 
         paymentsClient.AddHeaderPropagation();
+        paymentsClient.AddHttpMessageHandler<CorrelationInterceptor>();
+
         storesClient.AddHeaderPropagation();
+        storesClient.AddHttpMessageHandler<CorrelationInterceptor>();
+
         productsClient.AddHeaderPropagation();
+        productsClient.AddHttpMessageHandler<CorrelationInterceptor>();
 
         subscriptionsClient.AddHeaderPropagation();
+        subscriptionsClient.AddHttpMessageHandler<CorrelationInterceptor>();
+
         ordersClient.AddHeaderPropagation();
+        ordersClient.AddHttpMessageHandler<CorrelationInterceptor>();
+
         credentialsClient.AddHeaderPropagation();
+        credentialsClient.AddHttpMessageHandler<CorrelationInterceptor>();
     }
 }
