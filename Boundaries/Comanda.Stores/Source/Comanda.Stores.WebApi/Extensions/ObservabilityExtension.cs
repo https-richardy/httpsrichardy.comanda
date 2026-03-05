@@ -24,7 +24,6 @@ public static class ObservabilityExtension
                     options.Dsn = settings.Observability.SentryDsn;
                     options.TracesSampleRate = 1.0;
                     options.AttachStacktrace = true;
-                    options.Debug = true;
                 });
         });
     }

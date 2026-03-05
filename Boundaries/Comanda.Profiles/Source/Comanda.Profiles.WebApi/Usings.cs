@@ -8,6 +8,7 @@ global using Microsoft.OpenApi.Models;
 
 global using Comanda.Profiles.WebApi.Extensions;
 global using Comanda.Profiles.WebApi.Constants;
+global using Comanda.Profiles.WebApi.Middlewares;
 global using Comanda.Profiles.Domain.Errors;
 
 global using Comanda.Profiles.Application.Payloads.Traceability;
@@ -23,4 +24,5 @@ global using HttpsRichardy.Federation.Sdk.Extensions;
 
 global using Scalar.AspNetCore;
 global using Serilog;
+global using Serilog.Context;
 global using FluentValidation.AspNetCore;

@@ -8,4 +8,5 @@ public static class Headers
     public const string Pagination = "X-Pagination";
     public const string Authorization = "Authorization";
     public const string Idempotency = "Idempotency-Key";
+    public const string Correlation = "Correlation";
 }

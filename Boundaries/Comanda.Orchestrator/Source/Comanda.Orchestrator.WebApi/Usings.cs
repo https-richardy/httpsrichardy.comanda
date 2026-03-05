@@ -21,6 +21,7 @@ global using Comanda.Internal.Contracts.Clients.Interfaces;
 global using Comanda.Orchestrator.WebApi.Extensions;
 global using Comanda.Orchestrator.WebApi.Constants;
 global using Comanda.Orchestrator.WebApi.Middlewares;
+global using Comanda.Orchestrator.WebApi.Interceptors;
 global using Comanda.Orchestrator.WebApi.Providers;
 
 global using Comanda.Orchestrator.Application.Payloads.Payments;
@@ -38,5 +39,6 @@ global using HttpsRichardy.Federation.Sdk.Contracts.Errors;
 
 global using Scalar.AspNetCore;
 global using Serilog;
+global using Serilog.Context;
 global using FluentValidation.AspNetCore;
 

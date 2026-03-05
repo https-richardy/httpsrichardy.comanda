@@ -1,4 +1,4 @@
-﻿namespace Comanda.Payments.WebApi.Constants;
+namespace Comanda.Subscriptions.WebApi.Constants;
 
 public static class Headers
 {
