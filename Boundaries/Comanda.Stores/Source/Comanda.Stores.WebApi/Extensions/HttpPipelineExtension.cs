@@ -14,6 +14,7 @@ public static class HttpPipelineExtension
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseCorrelationMiddleware();
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

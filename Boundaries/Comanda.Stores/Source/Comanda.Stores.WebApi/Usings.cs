@@ -8,6 +8,7 @@ global using Microsoft.OpenApi.Models;
 
 global using Comanda.Stores.WebApi.Extensions;
 global using Comanda.Stores.WebApi.Constants;
+global using Comanda.Stores.WebApi.Middlewares;
 global using Comanda.Stores.Domain.Errors;
 
 global using Comanda.Stores.Application.Payloads.Establishment;
@@ -29,4 +30,5 @@ global using HttpsRichardy.Federation.Sdk.Extensions;
 
 global using Scalar.AspNetCore;
 global using Serilog;
+global using Serilog.Context;
 global using FluentValidation.AspNetCore;
