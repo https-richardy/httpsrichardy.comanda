@@ -17,6 +17,7 @@ public sealed class WebApplicationFixture : IAsyncLifetime
     public async ValueTask InitializeAsync()
     {
         await _databaseFixture.InitializeAsync();
+        await _databaseFixture.CleanDatabaseAsync();
 
         Environment.SetEnvironmentVariable("Settings__Database__ConnectionString", _databaseFixture.ConnectionString);
         Environment.SetEnvironmentVariable("Settings__Database__DatabaseName", _databaseFixture.DatabaseName);
@@ -50,7 +51,6 @@ public sealed class WebApplicationFixture : IAsyncLifetime
         HttpClient.Dispose();
 
         await _factory.DisposeAsync();
-        await _databaseFixture.CleanDatabaseAsync();
         await _databaseFixture.DisposeAsync();
     }
 }
