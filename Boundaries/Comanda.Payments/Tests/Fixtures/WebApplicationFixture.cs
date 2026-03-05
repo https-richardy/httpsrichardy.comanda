@@ -66,7 +66,7 @@ public sealed class WebApplicationFixture : IAsyncLifetime
     {
         HttpClient.Dispose();
 
-        await _factory.DisposeAsync()
+        await _factory.DisposeAsync();
         await _databaseFixture.DisposeAsync();
     }
 }
