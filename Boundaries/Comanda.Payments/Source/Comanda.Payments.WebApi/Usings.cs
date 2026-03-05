@@ -8,6 +8,7 @@ global using Microsoft.OpenApi.Models;
 global using Comanda.Payments.WebApi.Constants;
 global using Comanda.Payments.WebApi.Interceptors;
 global using Comanda.Payments.WebApi.Extensions;
+global using Comanda.Payments.WebApi.Middlewares;
 global using Comanda.Payments.Domain.Errors;
 
 global using Comanda.Payments.Application.Payloads.Traceability;
@@ -25,4 +26,5 @@ global using HttpsRichardy.Federation.Sdk.Extensions;
 
 global using Scalar.AspNetCore;
 global using Serilog;
+global using Serilog.Context;
 global using FluentValidation.AspNetCore;

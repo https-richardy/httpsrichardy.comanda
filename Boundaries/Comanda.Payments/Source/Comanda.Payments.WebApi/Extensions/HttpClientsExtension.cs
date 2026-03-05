@@ -8,6 +8,7 @@ public static class HttpClientsExtension
         // register transient lifetime interceptors here
         // https://learn.microsoft.com/en-us/aspnet/web-api/overview/advanced/httpclient-parameters-handlers
         services.AddTransient<CredentialInterceptor>();
+        services.AddTransient<CorrelationInterceptor>();
 
         var paymentClient = services.AddHttpClient<IAbacatePayClient, AbacatePayClient>(client =>
         {
@@ -16,5 +17,6 @@ public static class HttpClientsExtension
         });
 
         paymentClient.AddHttpMessageHandler<CredentialInterceptor>();
+        paymentClient.AddHttpMessageHandler<CorrelationInterceptor>();
     }
 }
