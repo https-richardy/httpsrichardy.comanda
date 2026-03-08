@@ -1,4 +1,4 @@
-namespace Comanda.Payments.TestSuite.Unit;
+namespace Comanda.Payments.TestSuite.Unit.Filtering;
 
 public sealed class PaymentPipelineDefinitionTests
 {
