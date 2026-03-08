@@ -4,6 +4,7 @@ global using System.Net.Http.Json;
 global using System.Net.Mime;
 
 global using Microsoft.AspNetCore.Mvc.Testing;
+global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.DependencyInjection;
 
 global using Comanda.Payments.Domain.Aggregates;
@@ -21,6 +22,7 @@ global using Comanda.Payments.Infrastructure.Pipelines;
 global using Comanda.Payments.TestSuite.Fixtures;
 global using Comanda.Payments.TestSuite.Mocks;
 global using Comanda.Payments.WebApi;
+global using Comanda.Payments.WebApi.Interceptors;
 
 global using HttpsRichardy.Internal.Essentials.Concepts;
 global using HttpsRichardy.Internal.Essentials.Utilities;
