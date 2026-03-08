@@ -1,0 +1,30 @@
+name: smarttechinnovate.administration.ui - pr validation
+
+trigger:
+  branches:
+    exclude:
+      - main
+
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'install Node.js 20.x'
+
+- script: npm install -g pnpm
+  displayName: 'install pnpm'
+
+- script: pnpm install
+  displayName: 'install project dependencies'
+
+- script: pnpm build
+  displayName: 'build Vite application'
+  env:
+    VITE_GATEWAY_API: https://smartconsig-gateway-live.victoriousocean-22a8a528.brazilsouth.azurecontainerapps.io/api/v1
+    VITE_AUTH_API: https://feijuca-auth-api.victoriousocean-22a8a528.brazilsouth.azurecontainerapps.io/api/v1
+    CI: true
