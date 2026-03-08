@@ -53,8 +53,13 @@ public sealed class WebApplicationFixture : IAsyncLifetime
                     if (descriptor is not null)
                         services.Remove(descriptor);
 
+                    descriptor = services.SingleOrDefault(descriptor => descriptor.ServiceType == typeof(IPaymentGateway));
+                    if (descriptor is not null)
+                        services.Remove(descriptor);
+
                     services.AddSingleton(_ => _databaseFixture.Client);
                     services.AddSingleton(_ => _databaseFixture.Database);
+                    services.AddSingleton<IPaymentGateway, PaymentGatewayMock>();
                 });
             });
 
