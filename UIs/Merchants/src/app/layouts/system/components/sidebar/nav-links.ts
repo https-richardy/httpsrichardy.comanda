@@ -1,4 +1,10 @@
-import { Home } from 'lucide-react';
+import {
+  ChefHat,
+  ClipboardList,
+  CreditCard,
+  Home,
+  Settings
+} from 'lucide-react';
 import type { NavItem } from './nav-items';
 
 export const Navlinks: NavItem[] = [
@@ -7,4 +13,24 @@ export const Navlinks: NavItem[] = [
     url: '/dashboard',
     icon: Home
   },
+  {
+    title: 'Cozinha',
+    url: '/kitchen',
+    icon: ChefHat
+  },
+  {
+    title: 'Pagamentos',
+    url: '/payments',
+    icon: CreditCard
+  },
+  {
+    title: 'Pedidos',
+    url: '/orders',
+    icon: ClipboardList
+  },
+  {
+    title: 'Configurações',
+    url: '/settings',
+    icon: Settings
+  }
 ];
