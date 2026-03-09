@@ -42,7 +42,7 @@
 }
 
 :root {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Karla', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -123,7 +123,7 @@
   body {
     @apply bg-background text-foreground;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Karla', sans-serif;
   }
   :-webkit-scrollbar {
     width: 10px;
@@ -153,20 +153,20 @@
   .font-light,
   .font-medium,
   .font-normal {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Karla', sans-serif;
   }
 
   .font-semibold,
   .font-bold,
   .font-extrabold,
   .font-black {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Karla', sans-serif;
   }
 
   .font-weight-200,
   .font-weight-300,
   .font-weight-400 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Karla', sans-serif;
   }
 
   .font-weight-500,
@@ -174,6 +174,6 @@
   .font-weight-700,
   .font-weight-800,
   .font-weight-900 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Karla', sans-serif;
   }
 }
