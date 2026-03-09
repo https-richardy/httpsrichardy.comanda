@@ -41,7 +41,7 @@ export function LoginForm() {
               <SubmitingButton
                 label="Acessar"
                 state={isPending}
-                className="bg-red-700 text-white font-bold hover:bg-red-800"
+                className="bg-primary text-primary-foreground font-bold hover:bg-primary/90"
               />
             </div>
           </div>
