@@ -7,6 +7,7 @@
 public sealed class PaymentsController(IDispatcher dispatcher, IEventDispatcher eventDispatcher) : ControllerBase
 {
     [HttpPost("online")]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     [Authorize(Roles = Permissions.MakePayment)]
     public async Task<IActionResult> CreateOnlineChargeAsync(
         [FromBody] CheckoutSessionCreationScheme request, [FromHeader(Name = Headers.Credential)] string credential, CancellationToken cancellation)
@@ -33,6 +34,7 @@ public sealed class PaymentsController(IDispatcher dispatcher, IEventDispatcher 
     }
 
     [HttpPost("offline")]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     [Authorize(Roles = Permissions.MakePayment)]
     public async Task<IActionResult> CreateOfflinePaymentAsync([FromBody] OfflinePaymentScheme request, CancellationToken cancellation)
     {

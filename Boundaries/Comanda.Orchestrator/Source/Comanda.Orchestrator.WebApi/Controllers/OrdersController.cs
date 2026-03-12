@@ -32,6 +32,7 @@ public sealed class OrdersController(IDispatcher dispatcher) : ControllerBase
     }
 
     [HttpPost]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     [Authorize(Roles = Permissions.CreateOrder)]
     public async Task<IActionResult> CreateOrderAsync([FromBody] OrderCreationScheme request, CancellationToken cancellation)
     {
