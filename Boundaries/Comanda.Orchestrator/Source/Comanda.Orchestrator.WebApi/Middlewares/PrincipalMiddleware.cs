@@ -17,7 +17,7 @@ public sealed class PrincipalMiddleware(RequestDelegate next)
             return;
         }
 
-        var userName = context.User.FindFirst(ClaimTypes.Name);
+        var userName = context.User.Claims.FirstOrDefault(claim => claim.Type == "preferred_username");
         var userId = context.User.FindFirst(ClaimTypes.NameIdentifier);
 
         if (userId == null || string.IsNullOrWhiteSpace(userId.Value))
@@ -34,6 +34,21 @@ public sealed class PrincipalMiddleware(RequestDelegate next)
 
         principalProvider.SetPrincipal(new User(userId.Value, userName.Value));
 
-        await next(context);
+        /* enriches logging and monitoring contexts with user information */
+        /* enabling traceability of user actions across logs and error monitoring tools */
+
+        using (LogContext.PushProperty("user_id", userId.Value))
+        using (LogContext.PushProperty("user_name", userName.Value))
+
+        using (SentrySdk.PushScope())
+        {
+            SentrySdk.ConfigureScope(scope =>
+            {
+                scope.SetTag("user_id", userId.Value);
+                scope.SetTag("user_name", userName.Value);
+            });
+
+            await next(context);
+        }
     }
 }
