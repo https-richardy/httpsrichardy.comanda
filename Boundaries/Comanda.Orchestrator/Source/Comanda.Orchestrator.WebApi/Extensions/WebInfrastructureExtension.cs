@@ -27,5 +27,13 @@ public static class WebInfrastructureExtension
             options.Realm = settings.Federation.Realm;
             options.ClientSecret = settings.Federation.ClientSecret;
         });
+
+        services.AddIdempotency()
+            .WithInMemoryCache(options =>
+            {
+                options.DefaultCacheExpiration = TimeSpan.FromMinutes(1);
+                options.DefaultHeaderName = Headers.Idempotency;
+                options.ThrowOnMissingKey = false;
+            });
     }
 }
