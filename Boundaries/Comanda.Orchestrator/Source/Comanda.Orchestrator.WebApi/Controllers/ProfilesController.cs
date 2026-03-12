@@ -32,6 +32,7 @@ public sealed class ProfilesController(IDispatcher dispatcher) : ControllerBase
     }
 
     [HttpPost("customers")]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     [Authorize]
     public async Task<IActionResult> CreateCustomerAsync([FromBody] CustomerCreationScheme request, CancellationToken cancellation)
     {
@@ -138,6 +139,7 @@ public sealed class ProfilesController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPost("customers/{customerId}/addresses")]
     [Authorize(Roles = Permissions.EditCustomers)]
+    [Idempotent]
     public async Task<IActionResult> AssignCustomerAddressAsync(
         [FromBody] AssignCustomerAddressScheme request, [FromRoute] string customerId, CancellationToken cancellation)
     {
@@ -232,6 +234,7 @@ public sealed class ProfilesController(IDispatcher dispatcher) : ControllerBase
     }
 
     [HttpPost("owners")]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     [Authorize]
     public async Task<IActionResult> CreateOwnerAsync([FromBody] OwnerCreationScheme request, CancellationToken cancellation)
     {

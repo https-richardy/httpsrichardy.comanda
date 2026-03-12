@@ -37,8 +37,11 @@ global using HttpsRichardy.Internal.Essentials.Concepts;
 global using HttpsRichardy.Federation.Sdk.Extensions;
 global using HttpsRichardy.Federation.Sdk.Contracts.Errors;
 
-global using Scalar.AspNetCore;
 global using Serilog;
 global using Serilog.Context;
+
+global using Scalar.AspNetCore;
 global using FluentValidation.AspNetCore;
 
+global using Idempwanna.Core.Configuration;
+global using Idempwanna.Core.Attributes;

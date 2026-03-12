@@ -6,6 +6,7 @@ public sealed class SubscriptionsController(IDispatcher dispatcher) : Controller
 {
     [HttpPost]
     [Authorize(Roles = Permissions.Subscribe)]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     public async Task<IActionResult> CreateCheckoutSessionAsync(
         [FromBody] SubscriptionCheckoutSessionCreationScheme request, CancellationToken cancellation)
     {
@@ -29,6 +30,7 @@ public sealed class SubscriptionsController(IDispatcher dispatcher) : Controller
 
     [HttpDelete("{id}")]
     [Authorize(Roles = Permissions.CancelSubscription)]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     public async Task<IActionResult> CancelSubscriptionAsync(
         [FromQuery] SubscriptionCancelationScheme request, [FromRoute] string id, CancellationToken cancellation)
     {

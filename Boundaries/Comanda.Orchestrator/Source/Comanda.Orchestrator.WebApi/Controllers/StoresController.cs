@@ -35,6 +35,7 @@ public sealed class StoresController(IDispatcher dispatcher) : ControllerBase
     }
 
     [HttpPost]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     [Authorize(Roles = Permissions.CreateEstablishment)]
     public async Task<IActionResult> CreateEstablishmentAsync(
         [FromBody] EstablishmentCreationScheme request, CancellationToken cancellation)
@@ -111,6 +112,7 @@ public sealed class StoresController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPost("{establishmentId}/checkout")]
     [Authorize(Roles = Permissions.MakePayment)]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     public async Task<IActionResult> CheckoutAsync(
         [FromBody] CreateCheckoutScheme request, [FromRoute] string establishmentId, CancellationToken cancellation)
     {
@@ -162,6 +164,7 @@ public sealed class StoresController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPost("{establishmentId}/products")]
     [Authorize(Roles = Permissions.CreateProduct)]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     public async Task<IActionResult> CreateProductAsync(
         [FromBody] ProductCreationScheme request, [FromRoute] string establishmentId, CancellationToken cancellation)
     {
@@ -292,6 +295,7 @@ public sealed class StoresController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPost("{establishmentId}/integrations/credentials")]
     [Authorize(Roles = Permissions.CreateCredential)]
+    [Idempotent] // https://developer.mozilla.org/en-US/docs/Glossary/Idempotent
     public async Task<IActionResult> AssignCredentialAsync(
         [FromBody] CredentialCreationScheme request, [FromRoute] string establishmentId, CancellationToken cancellation)
     {
