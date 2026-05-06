@@ -3,4 +3,9 @@
     <Error Condition="'$(UsingMicrosoftNETSdkWeb)' == 'true' AND !Exists('$(ProjectDir)appsettings.json')"
            Text="appsettings.json is required for web projects." />
   </Target>
+
+  <Target Name="ValidateWarningsAsErrors" BeforeTargets="Build">
+    <Error Condition="'$(TreatWarningsAsErrors)' != 'true'"
+           Text="treat warnings as errors must remain enabled." />
+  </Target>
 </Project>
