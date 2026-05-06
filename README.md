@@ -18,7 +18,6 @@ The repository is intentionally structured to reflect Comanda’s architectural 
 .
 ├── .github/                # ci/cd workflows (pipelines)
 ├── Artifacts/              # internal nuget packages (shared kernel/contracts)
-├── UIs/                    # frontend applications
 ├── Boundaries/             # independent bounded contexts
 │   ├── Comanda.Stores/
 │   └── Comanda.Subscriptions/
