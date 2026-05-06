@@ -1,0 +1,19 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+      <!--
+        Disabled CS8509 to allow switch expressions without a default case,
+        assuming exhaustiveness is guaranteed by controlled types.
+
+        Disabled CS8524 for similar exhaustiveness reasons,
+        assuming that all cases are handled in switch statements.
+
+        Disabled CS8618 because some non-nullable properties are initialized externally by
+        frameworks, serializers, mappers, or dependency injection.
+    -->
+    <NoWarn>$(NoWarn);CS8509;CS8524;CS8618</NoWarn>
+  </PropertyGroup>
+</Project>
