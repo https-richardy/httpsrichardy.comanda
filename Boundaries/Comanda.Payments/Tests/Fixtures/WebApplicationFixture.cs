@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Comanda.Payments.TestSuite.Fixtures;
 
@@ -28,6 +29,7 @@ public sealed class WebApplicationFixture : IAsyncLifetime
         _factory = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
+                builder.UseEnvironment("Testing");
                 builder.ConfigureServices(services =>
                 {
                     services.AddAuthentication(options =>
