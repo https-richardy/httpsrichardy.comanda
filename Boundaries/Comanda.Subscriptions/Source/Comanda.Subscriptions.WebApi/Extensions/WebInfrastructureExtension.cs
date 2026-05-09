@@ -20,10 +20,11 @@ public static class WebInfrastructureExtension
         services.AddOpenApiSpecification();
         services.AddFederation(options =>
         {
-            options.BaseUrl = settings.Federation.BaseUrl;
+            options.Authority = settings.Federation.Authority;
             options.ClientId = settings.Federation.ClientId;
             options.Realm = settings.Federation.Realm;
             options.ClientSecret = settings.Federation.ClientSecret;
+            options.Audiences = settings.Federation.Audiences;
         });
     }
 }

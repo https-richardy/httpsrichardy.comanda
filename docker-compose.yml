@@ -63,7 +63,7 @@ services:
       Settings__Database__DatabaseName: ${COMANDA_MONGO_DATABASENAME}
 
       # federation settings
-      Settings__Federation__BaseUrl: ${COMANDA_FEDERATION_BASEURL}
+      Settings__Federation__Authority: ${COMANDA_FEDERATION_AUTHORITY}
       Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
       Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
       Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}
@@ -90,7 +90,7 @@ services:
       Settings__Database__DatabaseName: ${COMANDA_MONGO_DATABASENAME}
 
       # federation settings
-      Settings__Federation__BaseUrl: ${COMANDA_FEDERATION_BASEURL}
+      Settings__Federation__Authority: ${COMANDA_FEDERATION_AUTHORITY}
       Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
       Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
       Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}
@@ -120,7 +120,7 @@ services:
       Settings__Database__DatabaseName: ${COMANDA_MONGO_DATABASENAME}
 
       # federation settings
-      Settings__Federation__BaseUrl: ${COMANDA_FEDERATION_BASEURL}
+      Settings__Federation__Authority: ${COMANDA_FEDERATION_AUTHORITY}
       Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
       Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
       Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}
@@ -147,7 +147,7 @@ services:
       Settings__Database__DatabaseName: ${COMANDA_MONGO_DATABASENAME}
 
       # federation settings
-      Settings__Federation__BaseUrl: ${COMANDA_FEDERATION_BASEURL}
+      Settings__Federation__Authority: ${COMANDA_FEDERATION_AUTHORITY}
       Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
       Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
       Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}
@@ -177,7 +177,7 @@ services:
       Settings__Database__DatabaseName: ${COMANDA_MONGO_DATABASENAME}
 
       # federation settings
-      Settings__Federation__BaseUrl: ${COMANDA_FEDERATION_BASEURL}
+      Settings__Federation__Authority: ${COMANDA_FEDERATION_AUTHORITY}
       Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
       Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
       Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}
@@ -200,7 +200,7 @@ services:
       - comanda.infrastructure.seq
     environment:
       # federation settings
-      Settings__Federation__BaseUrl: ${COMANDA_FEDERATION_BASEURL}
+      Settings__Federation__Authority: ${COMANDA_FEDERATION_AUTHORITY}
       Settings__Federation__Realm: ${COMANDA_FEDERATION_REALM}
       Settings__Federation__ClientId: ${COMANDA_FEDERATION_CLIENTID}
       Settings__Federation__ClientSecret: ${COMANDA_FEDERATION_CLIENTSECRET}

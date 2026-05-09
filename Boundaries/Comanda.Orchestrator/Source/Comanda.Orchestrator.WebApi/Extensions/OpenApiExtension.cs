@@ -30,7 +30,7 @@ public static class OpenApiExtension
                     {
                         ClientCredentials = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri(settings.Federation.BaseUrl + "/api/v1/protocol/open-id/connect/token")
+                            TokenUrl = new Uri(settings.Federation.Authority + "/api/v1/protocol/open-id/connect/token")
                         }
                     }
                 };
@@ -40,12 +40,6 @@ public static class OpenApiExtension
                 {
                     [document.Components.SecuritySchemes[SecuritySchemes.Bearer]] = Array.Empty<string>(),
                 });
-
-                document.Info.Contact = new OpenApiContact
-                {
-                    Name = "Richard Garcia",
-                    Email = "code.richardys@gmail.com",
-                };
 
                 return Task.CompletedTask;
             });

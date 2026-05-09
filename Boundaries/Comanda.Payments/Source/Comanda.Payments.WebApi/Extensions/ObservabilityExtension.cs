@@ -5,6 +5,10 @@ public static class ObservabilityExtension
 {
     public static void AddObservability(this WebApplicationBuilder builder)
     {
+        // prevents seq from being initialized in non-production/non-development environments (e.g., testing)
+        if (!builder.Environment.IsDevelopment() && !builder.Environment.IsProduction())
+            return;
+
         builder.Host.UseSerilog((context, services, logger) =>
         {
             var settings = services.GetRequiredService<ISettings>();

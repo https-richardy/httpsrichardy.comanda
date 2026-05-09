@@ -9,7 +9,7 @@ public sealed class WebApplicationFixture : IAsyncLifetime
     public IServiceProvider Services { get; private set; } = default!;
     private WebApplicationFactory<Program> _factory = default!;
 
-    public async ValueTask InitializeAsync()
+    public ValueTask InitializeAsync()
     {
         _factory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
             {
@@ -22,7 +22,7 @@ public sealed class WebApplicationFixture : IAsyncLifetime
                         options.DefaultScheme = Defaults.AuthenticationScheme;
                     });
 
-                    policy.AddScheme<AuthenticationSchemeOptions, BypassAuthenticationHandler>(Defaults.AuthenticationScheme, _ => {  });
+                    policy.AddScheme<AuthenticationSchemeOptions, BypassAuthenticationHandler>(Defaults.AuthenticationScheme, _ => { });
                     services.AddAuthorizationBuilder()
                         .SetDefaultPolicy(new AuthorizationPolicyBuilder(Defaults.AuthenticationScheme)
                             .RequireAuthenticatedUser()
@@ -32,6 +32,8 @@ public sealed class WebApplicationFixture : IAsyncLifetime
 
         HttpClient = _factory.CreateClient();
         Services = _factory.Services;
+
+        return ValueTask.CompletedTask;
     }
 
     public async ValueTask DisposeAsync()
