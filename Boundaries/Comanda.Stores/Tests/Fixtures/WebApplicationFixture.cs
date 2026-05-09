@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Hosting;
+
 namespace Comanda.Stores.TestSuite.Fixtures;
 
 public sealed class WebApplicationFixture : IAsyncLifetime
@@ -25,6 +27,7 @@ public sealed class WebApplicationFixture : IAsyncLifetime
         _factory = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
+                builder.UseEnvironment("Testing");
                 builder.ConfigureServices(services =>
                 {
                     services.AddBypassAuthentication();
