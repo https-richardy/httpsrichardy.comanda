@@ -8,12 +8,12 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      subscriptions: ${{ steps.filter.outputs.subscriptions }}
-      stores: ${{ steps.filter.outputs.stores }}
-      profiles: ${{ steps.filter.outputs.profiles }}
-      payments: ${{ steps.filter.outputs.payments }}
-      orders: ${{ steps.filter.outputs.orders }}
-      orchestrator: ${{ steps.filter.outputs.orchestrator }}
+      comanda_boundaries_orchestrator: ${{ steps.filter.outputs.comanda_boundaries_orchestrator }}
+      comanda_boundaries_orders: ${{ steps.filter.outputs.comanda_boundaries_orders }}
+      comanda_boundaries_payments: ${{ steps.filter.outputs.comanda_boundaries_payments }}
+      comanda_boundaries_profiles: ${{ steps.filter.outputs.comanda_boundaries_profiles }}
+      comanda_boundaries_stores: ${{ steps.filter.outputs.comanda_boundaries_stores }}
+      comanda_boundaries_subscriptions: ${{ steps.filter.outputs.comanda_boundaries_subscriptions }}
 
     steps:
       - name: checkout
@@ -21,78 +21,78 @@ jobs:
 
       - name: detect changed paths
         id: filter
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         with:
           filters: |
-            subscriptions:
-              - 'Boundaries/Comanda.Subscriptions/**'
-            stores:
-              - 'Boundaries/Comanda.Stores/**'
-            profiles:
-              - 'Boundaries/Comanda.Profiles/**'
-            payments:
-              - 'Boundaries/Comanda.Payments/**'
-            orders:
-              - 'Boundaries/Comanda.Orders/**'
-            orchestrator:
+            comanda_boundaries_orchestrator:
               - 'Boundaries/Comanda.Orchestrator/**'
+            comanda_boundaries_orders:
+              - 'Boundaries/Comanda.Orders/**'
+            comanda_boundaries_payments:
+              - 'Boundaries/Comanda.Payments/**'
+            comanda_boundaries_profiles:
+              - 'Boundaries/Comanda.Profiles/**'
+            comanda_boundaries_stores:
+              - 'Boundaries/Comanda.Stores/**'
+            comanda_boundaries_subscriptions:
+              - 'Boundaries/Comanda.Subscriptions/**'
 
-  deploy-subscriptions:
+  deploy-comanda-orchestrator:
     needs: changes
-    if: needs.changes.outputs.subscriptions == 'true'
-    uses: ./.github/workflows/reusable-production-deployment.yml
+    if: needs.changes.outputs.comanda_boundaries_orchestrator == 'true'
+    uses: ./.github/workflows/template-deployment.yml
     with:
-      service_path: Boundaries/Comanda.Subscriptions
-      image_name: httpsrichardy/comanda.subscriptions
-      deploy_url_secret: SUBSCRIPTIONS_PRODUCTION_DEPLOY_URL
+        service_path: Boundaries/Comanda.Orchestrator
+        image_name: httpsrichardy/comanda.orchestrator
+        deploy_url_secret: ORCHESTRATOR_PRODUCTION_DEPLOY_WEBHOOK_URL
     secrets: inherit
 
-  deploy-stores:
+  deploy-comanda-orders:
     needs: changes
-    if: needs.changes.outputs.stores == 'true'
-    uses: ./.github/workflows/reusable-production-deployment.yml
+    if: needs.changes.outputs.comanda_boundaries_orders == 'true'
+    uses: ./.github/workflows/template-deployment.yml
     with:
-      service_path: Boundaries/Comanda.Stores
-      image_name: httpsrichardy/comanda.stores
-      deploy_url_secret: STORES_PRODUCTION_DEPLOY_URL
+        service_path: Boundaries/Comanda.Orders
+        image_name: httpsrichardy/comanda.orders
+        deploy_url_secret: ORDERS_PRODUCTION_DEPLOY_WEBHOOK_URL
     secrets: inherit
 
-  deploy-profiles:
+  deploy-comanda-payments:
     needs: changes
-    if: needs.changes.outputs.profiles == 'true'
-    uses: ./.github/workflows/reusable-production-deployment.yml
+    if: needs.changes.outputs.comanda_boundaries_payments == 'true'
+    uses: ./.github/workflows/template-deployment.yml
     with:
-      service_path: Boundaries/Comanda.Profiles
-      image_name: httpsrichardy/comanda.profiles
-      deploy_url_secret: PROFILES_PRODUCTION_DEPLOY_URL
+        service_path: Boundaries/Comanda.Payments
+        image_name: httpsrichardy/comanda.payments
+        deploy_url_secret: PAYMENTS_PRODUCTION_DEPLOY_WEBHOOK_URL
     secrets: inherit
 
-  deploy-payments:
+  deploy-comanda-profiles:
     needs: changes
-    if: needs.changes.outputs.payments == 'true'
-    uses: ./.github/workflows/reusable-production-deployment.yml
+    if: needs.changes.outputs.comanda_boundaries_profiles == 'true'
+    uses: ./.github/workflows/template-deployment.yml
     with:
-      service_path: Boundaries/Comanda.Payments
-      image_name: httpsrichardy/comanda.payments
-      deploy_url_secret: PAYMENTS_PRODUCTION_DEPLOY_URL
+        service_path: Boundaries/Comanda.Profiles
+        image_name: httpsrichardy/comanda.profiles
+        deploy_url_secret: PROFILES_PRODUCTION_DEPLOY_WEBHOOK_URL
     secrets: inherit
 
-  deploy-orders:
+  deploy-comanda-stores:
     needs: changes
-    if: needs.changes.outputs.orders == 'true'
-    uses: ./.github/workflows/reusable-production-deployment.yml
+    if: needs.changes.outputs.comanda_boundaries_stores == 'true'
+    uses: ./.github/workflows/template-deployment.yml
     with:
-      service_path: Boundaries/Comanda.Orders
-      image_name: httpsrichardy/comanda.orders
-      deploy_url_secret: ORDERS_PRODUCTION_DEPLOY_URL
+        service_path: Boundaries/Comanda.Stores
+        image_name: httpsrichardy/comanda.stores
+        deploy_url_secret: STORES_PRODUCTION_DEPLOY_WEBHOOK_URL
     secrets: inherit
 
-  deploy-orchestrator:
+  deploy-comanda-subscriptions:
     needs: changes
-    if: needs.changes.outputs.orchestrator == 'true'
-    uses: ./.github/workflows/reusable-production-deployment.yml
+    if: needs.changes.outputs.comanda_boundaries_subscriptions == 'true'
+    uses: ./.github/workflows/template-deployment.yml
     with:
-      service_path: Boundaries/Comanda.Orchestrator
-      image_name: httpsrichardy/comanda.orchestrator
-      deploy_url_secret: ORCHESTRATOR_PRODUCTION_DEPLOY_URL
+        service_path: Boundaries/Comanda.Subscriptions
+        image_name: httpsrichardy/comanda.subscriptions
+        deploy_url_secret: SUBSCRIPTIONS_PRODUCTION_DEPLOY_WEBHOOK_URL
     secrets: inherit

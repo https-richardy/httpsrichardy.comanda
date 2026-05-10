@@ -1,4 +1,4 @@
-name: workflow — trigger production deployment
+name: pipeline ci/cd — trigger deployment
 
 on:
   workflow_call:
@@ -26,9 +26,14 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+
+      - name: show sha
+        run: echo "sha - ${{ github.sha }}"
 
       - name: build docker image
-        run: docker build -t ${{ inputs.image_name }}:latest .
+        run: docker build -t ${{ inputs.image_name }}:latest -t ${{ inputs.image_name }}:${{ github.sha }} .
 
       - name: login docker hub
         uses: docker/login-action@v3
@@ -37,7 +42,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: push docker image
-        run: docker push ${{ inputs.image_name }}:latest
+        run: |
+          docker push ${{ inputs.image_name }}:latest
+          docker push ${{ inputs.image_name }}:${{ github.sha }}
 
       - name: deploy webhook
-        run: curl -X POST ${{ secrets[inputs.deploy_url_secret] }}
+        run: curl --max-time 20 -X POST ${{ secrets[inputs.deploy_url_secret] }}

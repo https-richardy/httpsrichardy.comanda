@@ -1,57 +1,53 @@
-name: workflow - publish package
+name: pipeline ci/cd - publish comanda packages
 
 on:
   push:
     branches:
       - master
-      - development
     paths:
       - 'Artifacts/Comanda.Internal.Contracts/**'
-  pull_request:
-    branches:
-      - master
-      - development
-    paths:
-      - 'Artifacts/Comanda.Internal.Contracts/**'
+      - 'Artifacts/Comanda.Internal.AspNet/**'
 
 jobs:
-  publish:
+  changes:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: Artifacts/Comanda.Internal.Contracts
+    outputs:
+      comanda_internal_contracts: ${{ steps.filter.outputs.comanda_internal_contracts }}
+      comanda_internal_aspnet: ${{ steps.filter.outputs.comanda_internal_aspnet }}
 
     steps:
       - name: checkout code
-        uses: actions/checkout@v4
-
-      - name: setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/checkout@v5
         with:
-          dotnet-version: '9.0.x'
+          fetch-depth: 0
 
-      - name: restore dependencies
-        run: dotnet restore
+      - name: detect changed paths
+        id: filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            comanda_internal_contracts:
+              - 'Artifacts/Comanda.Internal.Contracts/**'
+            comanda_internal_aspnet:
+              - 'Artifacts/Comanda.Internal.AspNet/**'
 
-      - name: build
-        run: dotnet build --configuration Release --no-restore
+  # publish this package if there are changes in the corresponding path
+  publish-comanda-internal-contracts:
+    needs: changes
+    if: needs.changes.outputs.comanda_internal_contracts == 'true'
+    uses: ./.github/workflows/template-publish-package.yml
+    with:
+      working_directory: Artifacts/Comanda.Internal.Contracts/Source
+      dotnet_version: 9.0.x
+    secrets: inherit
 
-      - name: set version and pack
-        id: pack
-        run: |
-          BASE_VERSION="1.0"
-
-          if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
-            VERSION="${BASE_VERSION}.${GITHUB_RUN_NUMBER}"
-          else
-            VERSION="${BASE_VERSION}-beta.${GITHUB_RUN_NUMBER}"
-          fi
-
-          echo "use version: $VERSION"
-          dotnet pack -c Release -p:PackageVersion=$VERSION -o ./output --no-build
-
-          echo "package_version=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: push package to nuget
-        run: dotnet nuget push ./output/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+  # publish this package if there are changes in the corresponding path
+  publish-comanda-internal-aspnet:
+    needs: changes
+    if: needs.changes.outputs.comanda_internal_aspnet == 'true'
+    uses: ./.github/workflows/template-publish-package.yml
+    with:
+      working_directory: Artifacts/Comanda.Internal.AspNet/Source
+      dotnet_version: 9.0.x
+    secrets: inherit

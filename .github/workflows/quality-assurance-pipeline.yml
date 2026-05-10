@@ -1,80 +1,112 @@
-name: workflow — trigger pull request quality assurance
+name: pipeline ci/cd — trigger pull request quality assurance
 
 on:
   pull_request:
-    branches: [master]
+    branches:
+      - master
 
 jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      subscriptions: ${{ steps.filter.outputs.subscriptions }}
-      stores: ${{ steps.filter.outputs.stores }}
-      profiles: ${{ steps.filter.outputs.profiles }}
-      payments: ${{ steps.filter.outputs.payments }}
-      orders: ${{ steps.filter.outputs.orders }}
-      orchestrator: ${{ steps.filter.outputs.orchestrator }}
+      # filters for boundaries
+      comanda_boundaries_orchestrator: ${{ steps.filter.outputs.comanda_boundaries_orchestrator }}
+      comanda_boundaries_orders: ${{ steps.filter.outputs.comanda_boundaries_orders }}
+      comanda_boundaries_payments: ${{ steps.filter.outputs.comanda_boundaries_payments }}
+      comanda_boundaries_profiles: ${{ steps.filter.outputs.comanda_boundaries_profiles }}
+      comanda_boundaries_stores: ${{ steps.filter.outputs.comanda_boundaries_stores }}
+      comanda_boundaries_subscriptions: ${{ steps.filter.outputs.comanda_boundaries_subscriptions }}
+
+      # filters for packages
+      comanda_internal_contracts: ${{ steps.filter.outputs.comanda_internal_contracts }}
+      comanda_internal_aspnet: ${{ steps.filter.outputs.comanda_internal_aspnet }}
 
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: detect changed paths
         id: filter
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         with:
           filters: |
-            subscriptions:
-              - 'Boundaries/Comanda.Subscriptions/**'
-            stores:
-              - 'Boundaries/Comanda.Stores/**'
-            profiles:
-              - 'Boundaries/Comanda.Profiles/**'
-            payments:
-              - 'Boundaries/Comanda.Payments/**'
-            orders:
-              - 'Boundaries/Comanda.Orders/**'
-            orchestrator:
+            comanda_boundaries_orchestrator:
               - 'Boundaries/Comanda.Orchestrator/**'
+            comanda_boundaries_orders:
+              - 'Boundaries/Comanda.Orders/**'
+            comanda_boundaries_payments:
+              - 'Boundaries/Comanda.Payments/**'
+            comanda_boundaries_profiles:
+              - 'Boundaries/Comanda.Profiles/**'
+            comanda_boundaries_stores:
+              - 'Boundaries/Comanda.Stores/**'
+            comanda_boundaries_subscriptions:
+              - 'Boundaries/Comanda.Subscriptions/**'
+            comanda_internal_contracts:
+              - 'Artifacts/Comanda.Internal.Contracts/**'
+            comanda_internal_aspnet:
+              - 'Artifacts/Comanda.Internal.AspNet/**'
 
-  quality-assurance-subscriptions:
+# run build and tests for comanda orchestrator if there are changes in the corresponding path
+  quality-assurance-boundaries-orchestrator:
     needs: changes
-    if: needs.changes.outputs.subscriptions == 'true'
-    uses: ./.github/workflows/reusable-quality-assurance.yml
+    if: needs.changes.outputs.comanda_boundaries_orchestrator == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
     with:
-      service_path: Boundaries/Comanda.Subscriptions
+        service_path: Boundaries/Comanda.Orchestrator
 
-  quality-assurance-stores:
+# run build and tests for comanda orders if there are changes in the corresponding path
+  quality-assurance-boundaries-orders:
     needs: changes
-    if: needs.changes.outputs.stores == 'true'
-    uses: ./.github/workflows/reusable-quality-assurance.yml
+    if: needs.changes.outputs.comanda_boundaries_orders == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
     with:
-      service_path: Boundaries/Comanda.Stores
+        service_path: Boundaries/Comanda.Orders
 
-  quality-assurance-profiles:
+# run build and tests for comanda payments if there are changes in the corresponding path
+  quality-assurance-boundaries-payments:
     needs: changes
-    if: needs.changes.outputs.profiles == 'true'
-    uses: ./.github/workflows/reusable-quality-assurance.yml
+    if: needs.changes.outputs.comanda_boundaries_payments == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
     with:
-      service_path: Boundaries/Comanda.Profiles
+        service_path: Boundaries/Comanda.Payments
 
-  quality-assurance-payments:
+# run build and tests for comanda profiles if there are changes in the corresponding path
+  quality-assurance-boundaries-profiles:
     needs: changes
-    if: needs.changes.outputs.payments == 'true'
-    uses: ./.github/workflows/reusable-quality-assurance.yml
+    if: needs.changes.outputs.comanda_boundaries_profiles == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
     with:
-      service_path: Boundaries/Comanda.Payments
+        service_path: Boundaries/Comanda.Profiles
 
-  quality-assurance-orders:
+# run build and tests for comanda stores if there are changes in the corresponding path
+  quality-assurance-boundaries-stores:
     needs: changes
-    if: needs.changes.outputs.orders == 'true'
-    uses: ./.github/workflows/reusable-quality-assurance.yml
+    if: needs.changes.outputs.comanda_boundaries_stores == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
     with:
-      service_path: Boundaries/Comanda.Orders
+        service_path: Boundaries/Comanda.Stores
 
-  quality-assurance-orchestrator:
+# run build and tests for comanda subscriptions if there are changes in the corresponding path
+  quality-assurance-boundaries-subscriptions:
     needs: changes
-    if: needs.changes.outputs.orchestrator == 'true'
-    uses: ./.github/workflows/reusable-quality-assurance.yml
+    if: needs.changes.outputs.comanda_boundaries_subscriptions == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
     with:
-      service_path: Boundaries/Comanda.Orchestrator
+        service_path: Boundaries/Comanda.Subscriptions
+
+# run build and tests for comanda internal contracts if there are changes in the corresponding path
+  quality-assurance-internal-contracts:
+    needs: changes
+    if: needs.changes.outputs.comanda_internal_contracts == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
+    with:
+        service_path: Artifacts/Comanda.Internal.Contracts
+
+# run build and tests for comanda internal aspnet if there are changes in the corresponding path
+  quality-assurance-internal-aspnet:
+    needs: changes
+    if: needs.changes.outputs.comanda_internal_aspnet == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
+    with:
+        service_path: Artifacts/Comanda.Internal.AspNet
