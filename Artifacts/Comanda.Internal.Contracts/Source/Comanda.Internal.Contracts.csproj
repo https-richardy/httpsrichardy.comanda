@@ -4,11 +4,31 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>Comanda.Internal.Contracts</PackageId>
+    <Product>Comanda.Internal.Contracts</Product>
+    <Authors>Richard Garcia</Authors>
+    <Description>internal SDK for service-to-service communication in the comanda ecosystem, providing http clients, contracts and integration abstractions for distributed boundaries.</Description>
+    <PackageTags>dotnet;net9;utilities;internal;contracts;comanda</PackageTags>
+
+    <!-- package output configuration improving debug experience -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <DebugType>portable</DebugType>
+    <Deterministic>true</Deterministic>
+
+    <RepositoryUrl>https://github.com/https-richardy/httpsrichardy.comanda</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="HttpsRichardy.Dispatcher" Version="1.0.2" />
     <PackageReference Include="HttpsRichardy.Internal.Essentials" Version="1.0.2" />
+
+    <!-- source link configuration for debugging -->
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
