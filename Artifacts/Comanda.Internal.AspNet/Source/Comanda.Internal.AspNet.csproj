@@ -4,6 +4,28 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>Comanda.Internal.AspNet</PackageId>
+    <Product>Comanda.Internal.AspNet</Product>
+    <Authors>Richard Garcia</Authors>
+    <Description>internal ASP.NET SDK for shared api infrastructure in the comanda ecosystem, providing common extensions, middleware, dependency injection, authentication, observability, and reusable web application components.</Description>
+    <PackageTags>dotnet;net9;aspnet;aspnetcore;api;web;internal;comanda</PackageTags>
+
+    <!-- package output configuration improving debug experience -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <DebugType>portable</DebugType>
+    <Deterministic>true</Deterministic>
+
+    <RepositoryUrl>https://github.com/https-richardy/httpsrichardy.comanda</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- source link configuration for debugging -->
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
 
 </Project>
