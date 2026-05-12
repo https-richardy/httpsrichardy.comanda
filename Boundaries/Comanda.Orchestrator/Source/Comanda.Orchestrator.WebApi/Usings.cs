@@ -19,9 +19,7 @@ global using Comanda.Internal.Contracts.Clients;
 global using Comanda.Internal.Contracts.Clients.Interfaces;
 
 global using Comanda.Orchestrator.WebApi.Extensions;
-global using Comanda.Orchestrator.WebApi.Constants;
 global using Comanda.Orchestrator.WebApi.Middlewares;
-global using Comanda.Orchestrator.WebApi.Interceptors;
 global using Comanda.Orchestrator.WebApi.Providers;
 
 global using Comanda.Orchestrator.Application.Payloads.Payments;
@@ -30,6 +28,10 @@ global using Comanda.Orchestrator.Infrastructure.IoC.Extensions;
 
 global using Comanda.Orchestrator.CrossCutting.Configurations;
 global using Comanda.Orchestrator.CrossCutting.Constants;
+
+global using Comanda.Internal.AspNet.Middlewares;
+global using Comanda.Internal.AspNet.Interceptors;
+global using Comanda.Internal.AspNet.Constants;
 
 global using HttpsRichardy.Dispatcher.Contracts;
 global using HttpsRichardy.Internal.Essentials.Concepts;
