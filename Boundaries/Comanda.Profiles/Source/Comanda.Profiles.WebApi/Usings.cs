@@ -7,8 +7,6 @@ global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.OpenApi.Models;
 
 global using Comanda.Profiles.WebApi.Extensions;
-global using Comanda.Profiles.WebApi.Constants;
-global using Comanda.Profiles.WebApi.Middlewares;
 global using Comanda.Profiles.Domain.Errors;
 
 global using Comanda.Profiles.Application.Payloads.Traceability;
@@ -19,10 +17,12 @@ global using Comanda.Profiles.Application.Payloads;
 global using Comanda.Profiles.Infrastructure.IoC.Extensions;
 global using Comanda.Profiles.CrossCutting.Configurations;
 
+global using Comanda.Internal.AspNet.Middlewares;
+global using Comanda.Internal.AspNet.Constants;
+
 global using HttpsRichardy.Dispatcher.Contracts;
 global using HttpsRichardy.Federation.Sdk.Extensions;
 
 global using Scalar.AspNetCore;
 global using Serilog;
-global using Serilog.Context;
 global using FluentValidation.AspNetCore;
