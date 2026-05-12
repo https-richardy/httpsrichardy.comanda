@@ -8,7 +8,7 @@ public sealed class CredentialInterceptorTests
         var credential = Identifier.Generate<Payment>();
         var httpContext = new DefaultHttpContext();
 
-        httpContext.Request.Headers[WebApi.Constants.Headers.Credential] = credential;
+        httpContext.Request.Headers[Internal.AspNet.Constants.Headers.Credential] = credential;
 
         var accessor = new HttpContextAccessor
         {

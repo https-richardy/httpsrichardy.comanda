@@ -119,7 +119,7 @@ public sealed class PaymentEndpointTests(IntegrationEnvironmentFixture factory) 
             Content = content
         };
 
-        httpRequest.Headers.Add(WebApi.Constants.Headers.Credential, "mocked.credential");
+        httpRequest.Headers.Add(Internal.AspNet.Constants.Headers.Credential, "mocked.credential");
 
         /* act: send POST request to create checkout session */
         var response = await httpClient.SendAsync(httpRequest, TestContext.Current.CancellationToken);
