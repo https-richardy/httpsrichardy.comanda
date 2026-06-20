@@ -1,15 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { ProductsAPI } from '../../data/api';
-import { ProductsMapper } from '../../data/mapper';
-import type { Product } from '../../domain/entities';
+import { useAuthStore } from '@/features/auth/presentation/stores';
+import { EstablishmentService, ProductService } from '../../domain/services';
+import type { ProductFilters, PagedProducts, Establishment } from '../../domain/entities';
 
-export const useGetProducts = () => {
-  return useQuery<Product[]>({
-    queryKey: ['products'],
-    queryFn: async (): Promise<Product[]> => {
-      const data = await ProductsAPI.list();
-      return data.map(ProductsMapper.toDomain);
-    }
+export const useCurrentEstablishment = () => {
+  const userId = useAuthStore((s) => s.user?.id);
+
+  return useQuery<Establishment | null>({
+    queryKey: ['establishments', 'current', userId],
+    queryFn: async () => {
+      if (!userId) return null;
+      const result = await EstablishmentService.list({ ownerId: userId, pageSize: 1 });
+      return result.items[0] ?? null;
+    },
+    enabled: !!userId
+  });
+};
+
+export const useProducts = (
+  establishmentId: string | undefined,
+  filters?: ProductFilters
+) => {
+  return useQuery<PagedProducts>({
+    queryKey: ['products', establishmentId, filters],
+    queryFn: () => ProductService.list(establishmentId!, filters),
+    enabled: !!establishmentId
   });
 };

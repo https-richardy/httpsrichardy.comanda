@@ -1,4 +1,14 @@
-export type { OrderDTO } from './data/dto';
-export type { Order } from './domain/entities';
+export type {
+  Order,
+  OrderStatus,
+  OrderPriority,
+  OrderFulfillment,
+  OrderFilters,
+  CreateOrderInput,
+  UpdateOrderInput,
+  PagedOrders
+} from './domain/entities';
+export { OrderService } from './domain/services';
 export { OrdersPage } from './presentation/pages/OrdersPage';
-export { useGetOrders } from './presentation/hooks/use-queries';
+export { useOrders } from './presentation/hooks/use-queries';
+export { useCreateOrder, useUpdateOrder } from './presentation/hooks/use-mutations';

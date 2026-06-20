@@ -1,15 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { OrdersAPI } from '../../data/api';
-import { OrdersMapper } from '../../data/mapper';
-import type { Order } from '../../domain/entities';
+import { OrderService } from '../../domain/services';
+import type { OrderFilters, PagedOrders } from '../../domain/entities';
 
-export const useGetOrders = () => {
-  return useQuery<Order[]>({
-    queryKey: ['orders'],
-    queryFn: async (): Promise<Order[]> => {
-      const data = await OrdersAPI.list();
-      return data.map(OrdersMapper.toDomain);
-    }
+export const useOrders = (filters?: OrderFilters) => {
+  return useQuery<PagedOrders>({
+    queryKey: ['orders', filters],
+    queryFn: () => OrderService.list(filters)
   });
 };

@@ -1,14 +1,34 @@
-import type { IntegrationDTO } from '../dto';
-import type { Integration } from '../../domain/entities';
+import type { CredentialDTO, CreateCredentialDTO, UpdateCredentialDTO } from '../dto';
+import type {
+  Credential,
+  CreateCredentialInput,
+  UpdateCredentialInput
+} from '../../domain/entities';
 
-export const IntegrationsMapper = {
-  toDomain(dto: IntegrationDTO): Integration {
+export class CredentialMapper {
+  static toModel(dto: CredentialDTO): Credential {
     return {
-      id: dto.id,
-      name: dto.name,
-      enabled: dto.enabled
+      id: dto.identifier,
+      provider: dto.provider,
+      secretKey: dto.secretKey
     };
   }
-};
 
-export default IntegrationsMapper;
+  static toModelList(dtos: CredentialDTO[]): Credential[] {
+    return dtos.map(CredentialMapper.toModel);
+  }
+
+  static toCreateDTO(input: CreateCredentialInput): CreateCredentialDTO {
+    return {
+      secretKey: input.secretKey,
+      provider: input.provider
+    };
+  }
+
+  static toUpdateDTO(input: UpdateCredentialInput): UpdateCredentialDTO {
+    return {
+      secretKey: input.secretKey,
+      provider: input.provider
+    };
+  }
+}

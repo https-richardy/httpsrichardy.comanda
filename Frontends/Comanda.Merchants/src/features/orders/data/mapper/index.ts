@@ -1,15 +1,45 @@
-import type { OrderDTO } from '../dto';
-import type { Order } from '../../domain/entities';
+import type { OrderDTO, CreateOrderDTO, UpdateOrderDTO } from '../dto';
+import type { Order, CreateOrderInput, UpdateOrderInput } from '../../domain/entities';
 
-export const OrdersMapper = {
-  toDomain(dto: OrderDTO): Order {
+export class OrderMapper {
+  static toModel(dto: OrderDTO): Order {
     return {
-      id: dto.id,
+      id: dto.identifier,
+      code: dto.code,
+      address: dto.address,
       status: dto.status,
-      total: dto.total,
-      createdAt: new Date(dto.createdAt)
+      priority: dto.priority,
+      fulfillment: dto.fulfillment,
+      items: dto.items.map((item) => ({
+        title: item.title,
+        description: item.description,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+        totalPrice: item.totalPrice
+      })),
+      merchantId: dto.metadata.merchantId,
+      consumerId: dto.metadata.consumerId
     };
   }
-};
 
-export default OrdersMapper;
+  static toModelList(dtos: OrderDTO[]): Order[] {
+    return dtos.map(OrderMapper.toModel);
+  }
+
+  static toCreateDTO(input: CreateOrderInput): CreateOrderDTO {
+    return {
+      fulfillment: input.fulfillment,
+      priority: input.priority,
+      address: input.address,
+      metadata: { merchantId: input.merchantId, consumerId: input.consumerId },
+      items: input.items
+    };
+  }
+
+  static toUpdateDTO(input: UpdateOrderInput): UpdateOrderDTO {
+    return {
+      status: input.status,
+      priority: input.priority
+    };
+  }
+}

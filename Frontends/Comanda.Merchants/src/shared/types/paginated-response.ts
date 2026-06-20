@@ -1,7 +1,13 @@
-export type PaginatedResponse<T> = {
+export interface PaginationMetadata {
+  total: number;
+  totalPages: number;
   pageNumber: number;
   pageSize: number;
-  totalResults: number;
-  totalPages: number;
-  results: T[];
-};
+  hasNext: boolean;
+  hasPrevious: boolean;
+}
+
+export interface PagedResult<T> {
+  items: T[];
+  pagination: PaginationMetadata;
+}

@@ -1,6 +1,1 @@
-export interface KitchenItem {
-  id: string;
-  name: string;
-  status: string;
-}
-
+export type { Order, OrderStatus, OrderItem } from '@/features/orders/domain/entities';

@@ -1,6 +1,1 @@
-export interface KitchenItemDTO {
-  id: string;
-  name: string;
-  status: string;
-}
-
+export type { OrderDTO, OrderStatus } from '@/features/orders/data/dto';

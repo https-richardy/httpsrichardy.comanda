@@ -1,4 +1,3 @@
-export type { KitchenItemDTO } from './data/dto';
-export type { KitchenItem } from './domain/entities';
+export type { Order, OrderStatus } from './domain/entities';
 export { KitchenPage } from './presentation/pages/KitchenPage';
-export { useGetKitchenItems } from './presentation/hooks/use-queries';
+export { useKitchenOrders } from './presentation/hooks/use-queries';
