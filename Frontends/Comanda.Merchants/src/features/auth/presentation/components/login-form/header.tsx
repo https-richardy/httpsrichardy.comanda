@@ -7,7 +7,7 @@ export function LoginHeader() {
         <AppLogo className="w-64" />
       </div>
 
-      <h1 className="text-xl font-bold">Faça login na sua conta.</h1>
+        <h1 className="text-xl font-bold">Acesse a Comanda — Entrar</h1>
 
       <div className="text-center text-sm">
         Não possui uma conta?{' '}

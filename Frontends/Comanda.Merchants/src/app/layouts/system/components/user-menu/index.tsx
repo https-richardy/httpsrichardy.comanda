@@ -1,4 +1,4 @@
-import { Building, Mail, User, UsersIcon } from 'lucide-react';
+import { Mail, User, UsersIcon } from 'lucide-react';
 
 import { useAuthStore } from '@/features/auth';
 
@@ -38,12 +38,7 @@ export const UserMenu = () => {
               <User className="size-3" />
               <p className="text-xs font-medium leading-none">{user.name}</p>
             </div>
-            <div className="flex w-full items-center gap-1">
-              <Building className="size-3 text-muted-foreground" />
-              <p className="text-xs  text-muted-foreground truncate ">
-                {user.tenant}
-              </p>
-            </div>
+            {/* Tenant removed for Comanda */}
           </div>
         </Button>
       </DropdownMenuTrigger>

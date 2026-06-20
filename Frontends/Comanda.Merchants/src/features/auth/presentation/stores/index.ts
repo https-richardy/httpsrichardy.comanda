@@ -27,7 +27,7 @@ export const useAuthStore = create<AuthState>()(
       }
     }),
     {
-      name: 'comanda-merchants-auth',
+      name: 'comanda-auth',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         token: state.token,
