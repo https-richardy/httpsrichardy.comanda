@@ -1,4 +1,4 @@
-import { Mail, User, UsersIcon } from 'lucide-react';
+import { Mail, UsersIcon } from 'lucide-react';
 
 import { useAuthStore } from '@/features/auth';
 
@@ -26,20 +26,13 @@ export const UserMenu = () => {
         <Button
           type="button"
           variant="ghost"
-          className="relative flex items-center gap-2 h-full w-fit px-1.5 bg-muted-foreground/10"
+          className="relative flex items-center h-full w-fit p-0 hover:bg-transparent"
         >
           <Avatar className="size-8">
             <AvatarFallback className="bg-border dark:bg-border">
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
-          <div className="flex items-start gap-1 justify-center flex-col">
-            <div className="flex w-full items-center gap-1">
-              <User className="size-3" />
-              <p className="text-xs font-medium leading-none">{user.name}</p>
-            </div>
-            {/* Tenant removed for Comanda */}
-          </div>
         </Button>
       </DropdownMenuTrigger>
 
