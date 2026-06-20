@@ -1,8 +1,10 @@
 import {
   ChefHat,
   CreditCard,
+  MessageCircle,
   Package,
   PlugZap,
+  Settings,
   ShoppingBag
 } from 'lucide-react';
 
@@ -33,5 +35,15 @@ export const Navlinks: NavItem[] = [
     title: 'Integrações',
     url: '/integracoes',
     icon: PlugZap
+  },
+  {
+    title: 'Suporte',
+    url: '/suporte',
+    icon: MessageCircle
+  },
+  {
+    title: 'Configurações',
+    url: '/configuracoes',
+    icon: Settings
   }
 ];

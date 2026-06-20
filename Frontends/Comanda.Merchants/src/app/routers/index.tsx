@@ -1,7 +1,5 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
-
 import { PublicLayout } from '../layouts/public';
-
 import { AuthGuard } from './guards/auth-guard';
 import { GuestGuard } from './guards/guest-guard';
 
@@ -72,6 +70,24 @@ export const routers = createBrowserRouter([
                 '@/features/integrations'
               );
               return { Component: IntegrationsPage };
+            }
+          },
+          {
+            path: 'configuracoes',
+            lazy: async () => {
+              const { SettingsPage } = await import(
+                '@/features/settings/presentation/pages'
+              );
+              return { Component: SettingsPage };
+            }
+          },
+          {
+            path: 'suporte',
+            lazy: async () => {
+              const { SupportPage } = await import(
+                '@/features/support/presentation/pages'
+              );
+              return { Component: SupportPage };
             }
           },
           {
