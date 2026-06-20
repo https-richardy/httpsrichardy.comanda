@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$branch_name" = "main" ]; then
+  echo "❌ Erro: Commits diretos na branch main não são permitidos!"
+  exit 1
+fi
+
+npx tsc -b --noEmit
