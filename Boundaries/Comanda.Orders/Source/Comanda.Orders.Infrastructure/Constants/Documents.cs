@@ -13,4 +13,11 @@ public static class Documents
         public const string Fulfillment = "Fulfillment";
         public const string CreatedAt = "CreatedAt";
     }
+
+    public static class Tags
+    {
+        public const string Identifier = "_id";
+        public const string Code = "Code.Identifier";
+        public const string Merchant = "Metadata.MerchantId";
+    }
 }
