@@ -1,4 +1,5 @@
 #### THE IDEA BEHIND COMANDA
+
 Comanda is a SaaS platform designed to manage online orders and digital payments for fast-food establishments. It enables businesses to receive, process, and track customer orders in real time, providing a scalable foundation for modern, digital-first operations.
 
 #### THE ARCHITECTURE BEHIND COMANDA
