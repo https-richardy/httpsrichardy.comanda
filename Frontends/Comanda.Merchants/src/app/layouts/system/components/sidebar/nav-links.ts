@@ -5,7 +5,8 @@ import {
   Package,
   PlugZap,
   Settings,
-  ShoppingBag
+  ShoppingBag,
+  Tag
 } from 'lucide-react';
 
 import type { NavItem } from './nav-items';
@@ -30,6 +31,11 @@ export const Navlinks: NavItem[] = [
     title: 'Produtos',
     url: '/produtos',
     icon: Package
+  },
+  {
+    title: 'Comandas',
+    url: '/comandas',
+    icon: Tag
   },
   {
     title: 'Integrações',

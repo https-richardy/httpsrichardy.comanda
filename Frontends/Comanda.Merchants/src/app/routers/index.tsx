@@ -64,6 +64,13 @@ export const routers = createBrowserRouter([
             }
           },
           {
+            path: 'comandas',
+            lazy: async () => {
+              const { TagsPage } = await import('@/features/tags');
+              return { Component: TagsPage };
+            }
+          },
+          {
             path: 'integracoes',
             lazy: async () => {
               const { IntegrationsPage } = await import(
