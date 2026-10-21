@@ -1,7 +1,7 @@
 services:
   comanda.infrastructure.mongo:
     container_name: "comanda.infrastructure.mongo"
-    image: mongo:latest
+    image: mongo:8
     env_file:
       - .env
     ports:
@@ -12,20 +12,15 @@ services:
     volumes:
       - comanda.infrastructure.mongo:/data/db
 
-  comanda.infrastructure.federation:
-    container_name: "comanda.infrastructure.federation"
-    image: httpsrichardy/federation:latest
-    env_file:
-      - .env
+  comanda.infrastructure.keycloak:
+    container_name: "comanda.infrastructure.keycloak"
+    image: quay.io/keycloak/keycloak:26.7.0
+    command: start-dev
     ports:
-      - "5100:8080"
-    depends_on:
-      - comanda.infrastructure.mongo
+      - "8080:8080"
     environment:
-      Settings__Database__ConnectionString: ${COMANDA_MONGO_CONNECTIONSTRING}
-      Settings__Database__DatabaseName: ${COMANDA_MONGO_DATABASENAME}
-      Settings__Administration__Username: ${COMANDA_ADMIN_USERNAME}
-      Settings__Administration__Password: ${COMANDA_ADMIN_PASSWORD}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
 
   comanda.infrastructure.seq:
     container_name: "comanda.infrastructure.seq"
