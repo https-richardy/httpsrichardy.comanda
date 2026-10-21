@@ -13,6 +13,10 @@ global using HttpsRichardy.Dispatcher.Contracts;
 global using Comanda.Internal.Contracts.Errors;
 global using Comanda.Internal.Contracts.Helpers;
 
+global using Comanda.Internal.Contracts.Transport;
+global using Comanda.Internal.Contracts.Transport.Authentication;
+global using Comanda.Internal.Contracts.Transport.Authorization;
+
 global using Comanda.Internal.Contracts.Transport.External.AbacatePay;
 global using Comanda.Internal.Contracts.Transport.Internal.Stores;
 global using Comanda.Internal.Contracts.Transport.Internal.Orders;
@@ -23,3 +27,4 @@ global using Comanda.Internal.Contracts.Transport.Internal.Subscriptions;
 
 global using Comanda.Internal.Contracts.Transport.Internal;
 global using Comanda.Internal.Contracts.Clients.Interfaces;
+global using CredentialScheme = Comanda.Internal.Contracts.Transport.Internal.Stores.CredentialScheme;
