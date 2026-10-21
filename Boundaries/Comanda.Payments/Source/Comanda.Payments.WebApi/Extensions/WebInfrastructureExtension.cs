@@ -19,7 +19,7 @@ public static class WebInfrastructureExtension
             options.DisableDataAnnotationsValidation = true;
         });
 
-        services.AddOpenApiSpecification();
+        services.AddSecuritySchemes();
         services.AddBearerAuthentication();
         services.AddAuthorization();
     }

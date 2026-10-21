@@ -6,7 +6,6 @@ public partial class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        var environment = builder.Environment;
         var configuration = builder.Configuration;
 
         builder.Services.AddInfrastructure(configuration);
@@ -22,7 +21,7 @@ public partial class Program
         app.MapOpenApi();
 
         app.UseHttpPipeline();
-        app.UseSpecification(environment);
+        app.UseReference();
 
         await app.RunAsync();
     }

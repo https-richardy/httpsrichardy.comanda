@@ -1,8 +1,9 @@
 namespace Comanda.Subscriptions.WebApi.Extensions;
 
-public static class OpenApiExtension
+[ExcludeFromCodeCoverage(Justification = "this class is responsible for configuring the dependency injection container and does not contain any logic that can be tested.")]
+public static class SecuritySchemeExtension
 {
-    public static void AddOpenApiSpecification(this IServiceCollection services)
+    public static void AddSecuritySchemes(this IServiceCollection services)
     {
         var provider = services.BuildServiceProvider();
         var settings = provider.GetRequiredService<ISettings>();
@@ -14,31 +15,24 @@ public static class OpenApiExtension
             {
                 document.Components ??= new OpenApiComponents();
                 document.Components.SecuritySchemes ??= new Dictionary<string, OpenApiSecurityScheme>();
-                document.Components.SecuritySchemes[SecuritySchemes.Bearer] = new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer",
-                    BearerFormat = "JWT",
-                    Description = "Enter 'Bearer' and then your valid token."
-                };
-
                 document.Components.SecuritySchemes[SecuritySchemes.OAuth2] = new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
                     Flows = new OpenApiOAuthFlows
                     {
-                        ClientCredentials = new OpenApiOAuthFlow
+                        AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri(settings.Authentication.Authority + "/protocol/openid-connect/token")
+                            AuthorizationUrl = new Uri($"{settings.Authentication.Authority}/protocol/openid-connect/auth"),
+                            TokenUrl = new Uri($"{settings.Authentication.Authority}/protocol/openid-connect/token"),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                ["openid"] = "open-id connect scope",
+                                ["profile"] = "user profile information",
+                                ["email"] = "user email information"
+                            }
                         }
                     }
                 };
-
-                document.SecurityRequirements ??= [];
-                document.SecurityRequirements.Add(new OpenApiSecurityRequirement
-                {
-                    [document.Components.SecuritySchemes[SecuritySchemes.Bearer]] = Array.Empty<string>(),
-                });
 
                 return Task.CompletedTask;
             });
