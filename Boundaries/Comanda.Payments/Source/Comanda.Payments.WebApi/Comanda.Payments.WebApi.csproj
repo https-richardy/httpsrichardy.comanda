@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Comanda.Internal.AspNet" Version="0.69.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.12" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,24 +15,9 @@ public static class SpecificationsExtension
             options.WithTitle("comanda profiles | reference");
             options.ExpandAllTags();
 
-            if (environment.IsProduction())
-            {
-                options.AddPreferredSecuritySchemes(SecuritySchemes.OAuth2);
-                options.AddClientCredentialsFlow(SecuritySchemes.OAuth2, flow =>
-                {
-                    flow.WithCredentialsLocation(CredentialsLocation.Body);
-                });
-
-                return;
-            }
-
-            var settings = app.ServiceProvider.GetService<ISettings>()!;
-
             options.AddPreferredSecuritySchemes(SecuritySchemes.OAuth2);
             options.AddClientCredentialsFlow(SecuritySchemes.OAuth2, flow =>
             {
-                flow.ClientId = settings.Federation.ClientId;
-                flow.ClientSecret = settings.Federation.ClientSecret;
                 flow.WithCredentialsLocation(CredentialsLocation.Body);
             });
         });

@@ -1,4 +1,4 @@
-﻿namespace Comanda.Payments.WebApi.Extensions;
+namespace Comanda.Payments.WebApi.Extensions;
 
 public static class OpenApiExtension
 {
@@ -29,7 +29,7 @@ public static class OpenApiExtension
                     {
                         ClientCredentials = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri(settings.Federation.Authority + "/api/v1/protocol/open-id/connect/token")
+                            TokenUrl = new Uri(settings.Authentication.Authority + "/protocol/openid-connect/token")
                         }
                     }
                 };
