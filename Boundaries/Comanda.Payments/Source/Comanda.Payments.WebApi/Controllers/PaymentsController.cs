@@ -7,8 +7,7 @@ public sealed class PaymentsController(IDispatcher dispatcher) : ControllerBase
 {
     [HttpGet]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> GetPaymentsAsync(
-        [FromQuery] PaymentsFetchParameters request, CancellationToken cancellation)
+    public async Task<IActionResult> GetPaymentsAsync([FromQuery] PaymentsFetchParameters request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request, cancellation);
 
@@ -16,14 +15,13 @@ public sealed class PaymentsController(IDispatcher dispatcher) : ControllerBase
         // but we keep it for consistency with the rest of the codebase and to follow established patterns.
         return result switch
         {
-            { IsSuccess: true } => StatusCode(StatusCodes.Status200OK, result.Data),
+            { IsSuccess: true } when result.Data is not null => StatusCode(StatusCodes.Status200OK, result.Data),
         };
     }
 
     [HttpPost("offline")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> CreateOfflinePaymentChargeAsync(
-        [FromBody] OfflinePaymentChargeScheme request, CancellationToken cancellation)
+    public async Task<IActionResult> CreateOfflinePaymentChargeAsync([FromBody] OfflinePaymentChargeScheme request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request, cancellation);
 
@@ -41,8 +39,7 @@ public sealed class PaymentsController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPost("online")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> CreateCheckoutSessionAsync(
-        [FromBody] CheckoutSessionCreationScheme request, [FromHeader(Name = Headers.Credential)] string credential, CancellationToken cancellation)
+    public async Task<IActionResult> CreateCheckoutSessionAsync([FromBody] CheckoutSessionCreationScheme request, [FromHeader(Name = Headers.Credential)] string credential, CancellationToken cancellation)
     {
         // this endpoint requires the payment gateway credential to be provided via request headers
         // if it is not present, a 400 response is returned
@@ -54,7 +51,7 @@ public sealed class PaymentsController(IDispatcher dispatcher) : ControllerBase
 
         return result switch
         {
-            { IsSuccess: true } =>
+            { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status200OK, result.Data),
 
             { IsFailure: true } =>
@@ -64,8 +61,7 @@ public sealed class PaymentsController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPut("{paymentId}/status")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> UpdatePaymentStatusAsync(
-        [FromRoute] string paymentId, [FromBody] PaymentStatusUpdateScheme request, CancellationToken cancellation)
+    public async Task<IActionResult> UpdatePaymentStatusAsync([FromRoute] string paymentId, [FromBody] PaymentStatusUpdateScheme request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { Identifier = paymentId }, cancellation);
 

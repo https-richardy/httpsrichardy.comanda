@@ -7,8 +7,7 @@ public sealed class OwnersController(IDispatcher dispatcher) : ControllerBase
 {
     [HttpGet]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> GetOwnersAsync(
-        [FromQuery] FetchOwnersParameters request, CancellationToken cancellation)
+    public async Task<IActionResult> GetOwnersAsync([FromQuery] FetchOwnersParameters request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request, cancellation);
 
@@ -31,8 +30,7 @@ public sealed class OwnersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPost]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> CreateOwnerAsync(
-        [FromBody] OwnerCreationScheme request, CancellationToken cancellation)
+    public async Task<IActionResult> CreateOwnerAsync([FromBody] OwnerCreationScheme request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request, cancellation);
 
@@ -48,14 +46,13 @@ public sealed class OwnersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPut("{id}")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> EditOwnerAsync(
-        [FromBody] EditOwnerScheme request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> EditOwnerAsync([FromBody] EditOwnerScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { OwnerId = id }, cancellation);
 
         return result switch
         {
-            { IsSuccess: true } =>
+            { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status200OK, result.Data),
 
             /* for tracking purposes: raise error #COMANDA-ERROR-0831D */
@@ -66,8 +63,7 @@ public sealed class OwnersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpDelete("{id}")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> DeleteOwnerAsync(
-        [FromQuery] OwnerDeletionScheme request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> DeleteOwnerAsync([FromQuery] OwnerDeletionScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { OwnerId = id }, cancellation);
 

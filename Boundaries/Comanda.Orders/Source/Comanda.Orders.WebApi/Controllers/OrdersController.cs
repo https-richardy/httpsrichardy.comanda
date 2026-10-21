@@ -45,8 +45,7 @@ public sealed class OrdersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPut("{id}")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> UpdateOrderAsync(
-        [FromBody] OrderModificationScheme request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderModificationScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { Id = id }, cancellation);
 

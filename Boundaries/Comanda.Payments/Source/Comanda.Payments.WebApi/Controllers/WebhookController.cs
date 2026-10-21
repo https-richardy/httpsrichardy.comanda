@@ -5,8 +5,7 @@ namespace Comanda.Payments.WebApi.Controllers;
 public sealed class WebhookController(IEventDispatcher dispatcher) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> OnWebhookNotificationAsync(
-        [FromBody] BillingPaidNotificationScheme request, CancellationToken cancellation)
+    public async Task<IActionResult> OnWebhookNotificationAsync([FromBody] BillingPaidNotificationScheme request, CancellationToken cancellation)
     {
         await dispatcher.DispatchAsync(request, cancellation);
 

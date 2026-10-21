@@ -7,8 +7,7 @@ public sealed class CustomersController(IDispatcher dispatcher) : ControllerBase
 {
     [HttpGet]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> GetCustomersAsync(
-        [FromQuery] FetchCustomersParameters request, CancellationToken cancellation)
+    public async Task<IActionResult> GetCustomersAsync([FromQuery] FetchCustomersParameters request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request, cancellation);
 
@@ -31,14 +30,13 @@ public sealed class CustomersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPost]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> CreateCustomerAsync(
-        [FromBody] CustomerCreationScheme request, CancellationToken cancellation)
+    public async Task<IActionResult> CreateCustomerAsync([FromBody] CustomerCreationScheme request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request, cancellation);
 
         return result switch
         {
-            { IsSuccess: true } =>
+            { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status201Created, result.Data),
 
             /* for tracking purposes: raise error #COMANDA-ERROR-76A71 */
@@ -49,14 +47,13 @@ public sealed class CustomersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPut("{id}")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> EditCustomerAsync(
-        [FromBody] EditCustomerScheme request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> EditCustomerAsync([FromBody] EditCustomerScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { CustomerId = id }, cancellation);
 
         return result switch
         {
-            { IsSuccess: true } =>
+            { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status200OK, result.Data),
 
             /* for tracking purposes: raise error #COMANDA-ERROR-AF04C */
@@ -67,8 +64,7 @@ public sealed class CustomersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpDelete("{id}")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> DeleteCustomerAsync(
-        [FromQuery] CustomerDeletionScheme request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> DeleteCustomerAsync([FromQuery] CustomerDeletionScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { CustomerId = id }, cancellation);
 
@@ -84,14 +80,13 @@ public sealed class CustomersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpGet("{id}/addresses")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> GetCustomerAddressAsync(
-        [FromQuery] FetchCustomerAddressesParameters request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> GetCustomerAddressAsync([FromQuery] FetchCustomerAddressesParameters request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { CustomerId = id }, cancellation);
 
         return result switch
         {
-            { IsSuccess: true } =>
+            { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status200OK, result.Data),
 
             /* for tracking purposes: raise error #COMANDA-ERROR-AF04C */
@@ -102,14 +97,13 @@ public sealed class CustomersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPost("{id}/addresses")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> AssignCustomerAddressAsync(
-        [FromBody] AssignCustomerAddressScheme request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> AssignCustomerAddressAsync([FromBody] AssignCustomerAddressScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { CustomerId = id }, cancellation);
 
         return result switch
         {
-            { IsSuccess: true } =>
+            { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status201Created, result.Data),
 
             /* for tracking purposes: raise error #COMANDA-ERROR-AF04C */
@@ -124,14 +118,13 @@ public sealed class CustomersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpPut("{id}/addresses")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> EditCustomerAddressAsync(
-        [FromBody] EditCustomerAddressScheme request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> EditCustomerAddressAsync([FromBody] EditCustomerAddressScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { CustomerId = id }, cancellation);
 
         return result switch
         {
-            { IsSuccess: true } =>
+            { IsSuccess: true } when result.Data is not null =>
                 StatusCode(StatusCodes.Status200OK, result.Data),
 
             /* for tracking purposes: raise error #COMANDA-ERROR-AF04C */
@@ -150,8 +143,7 @@ public sealed class CustomersController(IDispatcher dispatcher) : ControllerBase
 
     [HttpDelete("{id}/addresses")]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> DeleteCustomerAddressAsync(
-        [FromBody] DeleteCustomerAddressScheme request, [FromRoute] string id, CancellationToken cancellation)
+    public async Task<IActionResult> DeleteCustomerAddressAsync([FromBody] DeleteCustomerAddressScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { CustomerId = id }, cancellation);
 

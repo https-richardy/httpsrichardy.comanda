@@ -7,8 +7,7 @@ public sealed class ActivitiesController(IDispatcher dispatcher) : ControllerBas
 {
     [HttpGet]
     [Stability(Stability.Deprecated)]
-    public async Task<IActionResult> GetActivitiesAsync(
-        [FromQuery] ActivityFetchParameters request, CancellationToken cancellation)
+    public async Task<IActionResult> GetActivitiesAsync([FromQuery] ActivityFetchParameters request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request, cancellation);
 
@@ -16,7 +15,7 @@ public sealed class ActivitiesController(IDispatcher dispatcher) : ControllerBas
         // but we keep it for consistency with the rest of the codebase and to follow established patterns.
         return result switch
         {
-            { IsSuccess: true } => StatusCode(StatusCodes.Status200OK, result.Data),
+            { IsSuccess: true } when result.Data is not null => StatusCode(StatusCodes.Status200OK, result.Data),
         };
     }
 }
