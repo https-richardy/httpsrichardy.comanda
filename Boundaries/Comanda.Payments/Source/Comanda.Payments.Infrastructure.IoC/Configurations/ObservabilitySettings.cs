@@ -1,4 +1,4 @@
-namespace Comanda.Payments.CrossCutting.Configurations;
+namespace Comanda.Payments.Infrastructure.IoC.Configurations;
 
 public sealed record ObservabilitySettings
 {

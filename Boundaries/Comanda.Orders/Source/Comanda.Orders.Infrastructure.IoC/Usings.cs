@@ -7,8 +7,7 @@ global using Comanda.Orders.Domain.Collections;
 global using Comanda.Orders.Domain.Contracts;
 global using Comanda.Orders.Domain.Services;
 
-global using Comanda.Orders.CrossCutting.Configurations;
-global using Comanda.Orders.CrossCutting.Exceptions;
+global using Comanda.Orders.Infrastructure.IoC.Configurations;
 global using Comanda.Orders.Infrastructure.Persistence;
 
 global using Comanda.Orders.Application.Payloads.Order;

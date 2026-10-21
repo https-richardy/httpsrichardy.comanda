@@ -14,7 +14,7 @@ global using Comanda.Payments.Application.Payloads.Payment;
 global using Comanda.Payments.Application.Payloads.Events.Billing;
 
 global using Comanda.Payments.Infrastructure.IoC.Extensions;
-global using Comanda.Payments.CrossCutting.Configurations;
+global using Comanda.Payments.Infrastructure.IoC.Configurations;
 
 global using Comanda.Internal.Contracts.Clients;
 global using Comanda.Internal.Contracts.Clients.Interfaces;

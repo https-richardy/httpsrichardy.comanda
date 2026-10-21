@@ -15,7 +15,7 @@ global using Comanda.Profiles.Application.Payloads.Owner;
 global using Comanda.Profiles.Application.Payloads;
 
 global using Comanda.Profiles.Infrastructure.IoC.Extensions;
-global using Comanda.Profiles.CrossCutting.Configurations;
+global using Comanda.Profiles.Infrastructure.IoC.Configurations;
 
 global using Comanda.Internal.AspNet.Middlewares;
 global using Comanda.Internal.AspNet.Constants;

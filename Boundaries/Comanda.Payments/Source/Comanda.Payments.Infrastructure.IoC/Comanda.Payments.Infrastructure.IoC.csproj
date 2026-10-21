@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../Comanda.Payments.Application/Comanda.Payments.Application.csproj" />
-    <ProjectReference Include="../Comanda.Payments.CrossCutting/Comanda.Payments.CrossCutting.csproj" />
     <ProjectReference Include="../Comanda.Payments.Infrastructure/Comanda.Payments.Infrastructure.csproj" />
   </ItemGroup>
 

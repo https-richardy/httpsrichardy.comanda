@@ -4,8 +4,7 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 
 global using Comanda.Subscriptions.Domain.Collections;
-global using Comanda.Subscriptions.CrossCutting.Configurations;
-global using Comanda.Subscriptions.CrossCutting.Exceptions;
+global using Comanda.Subscriptions.Infrastructure.IoC.Configurations;
 
 global using Comanda.Subscriptions.Application.Gateways;
 global using Comanda.Subscriptions.Application.Handlers.Traceability;

@@ -11,7 +11,7 @@ global using Comanda.Subscriptions.Application.Payloads.Traceability;
 global using Comanda.Subscriptions.Application.Payloads.Subscription;
 
 global using Comanda.Subscriptions.Infrastructure.IoC.Extensions;
-global using Comanda.Subscriptions.CrossCutting.Configurations;
+global using Comanda.Subscriptions.Infrastructure.IoC.Configurations;
 
 global using Comanda.Internal.AspNet.Middlewares;
 global using Comanda.Internal.AspNet.Constants;

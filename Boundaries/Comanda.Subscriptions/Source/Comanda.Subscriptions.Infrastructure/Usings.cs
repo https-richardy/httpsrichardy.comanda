@@ -10,7 +10,7 @@ global using Comanda.Subscriptions.Domain.Concepts;
 global using Comanda.Subscriptions.Domain.Errors;
 
 
-global using Comanda.Subscriptions.CrossCutting.Extensions;
+global using Comanda.Subscriptions.Infrastructure.Extensions;
 global using Comanda.Subscriptions.Application.Gateways;
 global using Comanda.Subscriptions.Application.Payloads.Subscription;
 

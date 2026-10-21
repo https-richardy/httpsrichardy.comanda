@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../Comanda.Stores.Application/Comanda.Stores.Application.csproj" />
-    <ProjectReference Include="../Comanda.Stores.CrossCutting/Comanda.Stores.CrossCutting.csproj" />
     <ProjectReference Include="../Comanda.Stores.Infrastructure/Comanda.Stores.Infrastructure.csproj" />
   </ItemGroup>
 

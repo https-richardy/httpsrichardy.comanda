@@ -6,8 +6,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Comanda.Profiles.Domain.Collections;
 global using Comanda.Profiles.Domain.Concepts;
 
-global using Comanda.Profiles.CrossCutting.Configurations;
-global using Comanda.Profiles.CrossCutting.Exceptions;
+global using Comanda.Profiles.Infrastructure.IoC.Configurations;
 
 global using Comanda.Profiles.Application.Payloads.Customer;
 global using Comanda.Profiles.Application.Payloads.Owner;

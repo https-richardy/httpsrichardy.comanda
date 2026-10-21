@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Source\Comanda.Payments.Application\Comanda.Payments.Application.csproj" />
-    <ProjectReference Include="..\Source\Comanda.Payments.CrossCutting\Comanda.Payments.CrossCutting.csproj" />
     <ProjectReference Include="..\Source\Comanda.Payments.Domain\Comanda.Payments.Domain.csproj" />
     <ProjectReference Include="..\Source\Comanda.Payments.Infrastructure\Comanda.Payments.Infrastructure.csproj" />
     <ProjectReference Include="..\Source\Comanda.Payments.WebApi\Comanda.Payments.WebApi.csproj" />

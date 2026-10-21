@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Source\Comanda.Stores.Application\Comanda.Stores.Application.csproj" />
-    <ProjectReference Include="..\Source\Comanda.Stores.CrossCutting\Comanda.Stores.CrossCutting.csproj" />
     <ProjectReference Include="..\Source\Comanda.Stores.Domain\Comanda.Stores.Domain.csproj" />
     <ProjectReference Include="..\Source\Comanda.Stores.Infrastructure\Comanda.Stores.Infrastructure.csproj" />
     <ProjectReference Include="..\Source\Comanda.Stores.WebApi\Comanda.Stores.WebApi.csproj" />

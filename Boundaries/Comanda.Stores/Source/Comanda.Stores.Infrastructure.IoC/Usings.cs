@@ -4,8 +4,7 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 
 global using Comanda.Stores.Domain.Collections;
-global using Comanda.Stores.CrossCutting.Configurations;
-global using Comanda.Stores.CrossCutting.Exceptions;
+global using Comanda.Stores.Infrastructure.IoC.Configurations;
 
 global using Comanda.Stores.Infrastructure.Persistence;
 

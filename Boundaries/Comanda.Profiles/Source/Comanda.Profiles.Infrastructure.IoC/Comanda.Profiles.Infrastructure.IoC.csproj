@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../Comanda.Profiles.Application/Comanda.Profiles.Application.csproj" />
-    <ProjectReference Include="../Comanda.Profiles.CrossCutting/Comanda.Profiles.CrossCutting.csproj" />
     <ProjectReference Include="../Comanda.Profiles.Infrastructure/Comanda.Profiles.Infrastructure.csproj" />
   </ItemGroup>
 

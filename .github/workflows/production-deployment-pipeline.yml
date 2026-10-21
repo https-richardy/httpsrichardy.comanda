@@ -8,7 +8,6 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      comanda_boundaries_orchestrator: ${{ steps.filter.outputs.comanda_boundaries_orchestrator }}
       comanda_boundaries_orders: ${{ steps.filter.outputs.comanda_boundaries_orders }}
       comanda_boundaries_payments: ${{ steps.filter.outputs.comanda_boundaries_payments }}
       comanda_boundaries_profiles: ${{ steps.filter.outputs.comanda_boundaries_profiles }}
@@ -24,8 +23,6 @@ jobs:
         uses: dorny/paths-filter@v4
         with:
           filters: |
-            comanda_boundaries_orchestrator:
-              - 'Boundaries/Comanda.Orchestrator/**'
             comanda_boundaries_orders:
               - 'Boundaries/Comanda.Orders/**'
             comanda_boundaries_payments:
@@ -36,16 +33,6 @@ jobs:
               - 'Boundaries/Comanda.Stores/**'
             comanda_boundaries_subscriptions:
               - 'Boundaries/Comanda.Subscriptions/**'
-
-  deploy-comanda-orchestrator:
-    needs: changes
-    if: needs.changes.outputs.comanda_boundaries_orchestrator == 'true'
-    uses: ./.github/workflows/template-deployment.yml
-    with:
-        service_path: Boundaries/Comanda.Orchestrator
-        image_name: httpsrichardy/comanda.orchestrator
-        deploy_url_secret: ORCHESTRATOR_PRODUCTION_DEPLOY_WEBHOOK_URL
-    secrets: inherit
 
   deploy-comanda-orders:
     needs: changes

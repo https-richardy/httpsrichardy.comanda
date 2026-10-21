@@ -1,4 +1,4 @@
-namespace Comanda.Stores.CrossCutting.Configurations;
+namespace Comanda.Stores.Infrastructure.IoC.Configurations;
 
 public sealed record FederationSettings
 {

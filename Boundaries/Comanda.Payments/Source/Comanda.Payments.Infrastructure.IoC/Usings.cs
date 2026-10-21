@@ -6,8 +6,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Comanda.Payments.Domain.Collections;
 global using Comanda.Payments.Domain.Concepts;
 
-global using Comanda.Payments.CrossCutting.Configurations;
-global using Comanda.Payments.CrossCutting.Exceptions;
+global using Comanda.Payments.Infrastructure.IoC.Configurations;
 
 global using Comanda.Payments.Application.Handlers.Payment;
 global using Comanda.Payments.Application.Gateways;

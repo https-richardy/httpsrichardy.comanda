@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Source\Comanda.Orders.Application\Comanda.Orders.Application.csproj" />
-    <ProjectReference Include="..\Source\Comanda.Orders.CrossCutting\Comanda.Orders.CrossCutting.csproj" />
     <ProjectReference Include="..\Source\Comanda.Orders.Domain\Comanda.Orders.Domain.csproj" />
     <ProjectReference Include="..\Source\Comanda.Orders.Infrastructure\Comanda.Orders.Infrastructure.csproj" />
     <ProjectReference Include="..\Source\Comanda.Orders.WebApi\Comanda.Orders.WebApi.csproj" />

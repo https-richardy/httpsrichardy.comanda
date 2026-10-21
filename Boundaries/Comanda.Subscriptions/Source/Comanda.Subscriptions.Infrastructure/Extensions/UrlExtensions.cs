@@ -1,4 +1,4 @@
-namespace Comanda.Subscriptions.CrossCutting.Extensions;
+namespace Comanda.Subscriptions.Infrastructure.Extensions;
 
 public static class UrlExtensions
 {

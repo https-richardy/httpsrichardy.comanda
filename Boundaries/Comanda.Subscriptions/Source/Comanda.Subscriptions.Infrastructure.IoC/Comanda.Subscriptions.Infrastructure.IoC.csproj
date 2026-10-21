@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../Comanda.Subscriptions.Application/Comanda.Subscriptions.Application.csproj" />
-    <ProjectReference Include="../Comanda.Subscriptions.CrossCutting/Comanda.Subscriptions.CrossCutting.csproj" />
     <ProjectReference Include="../Comanda.Subscriptions.Infrastructure/Comanda.Subscriptions.Infrastructure.csproj" />
   </ItemGroup>
 

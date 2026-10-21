@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="../Comanda.Payments.Domain/Comanda.Payments.Domain.csproj" />
     <ProjectReference Include="../Comanda.Payments.Application/Comanda.Payments.Application.csproj" />
-    <ProjectReference Include="../Comanda.Payments.CrossCutting/Comanda.Payments.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>

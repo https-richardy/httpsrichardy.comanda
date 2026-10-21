@@ -1,4 +1,4 @@
-namespace Comanda.Orders.CrossCutting.Configurations;
+namespace Comanda.Orders.Infrastructure.IoC.Configurations;
 
 public interface ISettings
 {

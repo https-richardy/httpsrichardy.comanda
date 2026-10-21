@@ -21,7 +21,7 @@ global using Comanda.Stores.Infrastructure.Gateways;
 global using Comanda.Stores.Infrastructure.Constants;
 global using Comanda.Stores.Infrastructure.Options;
 
-global using Comanda.Stores.CrossCutting.Configurations;
+global using Comanda.Stores.Infrastructure.IoC.Configurations;
 
 global using Comanda.Internal.AspNet.Middlewares;
 global using Comanda.Internal.AspNet.Constants;

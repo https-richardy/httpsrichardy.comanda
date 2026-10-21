@@ -1,4 +1,4 @@
-namespace Comanda.Subscriptions.CrossCutting.Configurations;
+namespace Comanda.Subscriptions.Infrastructure.IoC.Configurations;
 
 public sealed record Settings : ISettings
 {

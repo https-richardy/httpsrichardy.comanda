@@ -1,4 +1,4 @@
-namespace Comanda.Profiles.CrossCutting.Configurations;
+namespace Comanda.Profiles.Infrastructure.IoC.Configurations;
 
 public sealed record FederationSettings
 {

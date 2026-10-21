@@ -13,7 +13,7 @@ global using Comanda.Orders.Application.Payloads.Order;
 global using Comanda.Orders.Application.Payloads;
 
 global using Comanda.Orders.Infrastructure.IoC.Extensions;
-global using Comanda.Orders.CrossCutting.Configurations;
+global using Comanda.Orders.Infrastructure.IoC.Configurations;
 
 global using Comanda.Internal.AspNet.Middlewares;
 global using Comanda.Internal.AspNet.Constants;

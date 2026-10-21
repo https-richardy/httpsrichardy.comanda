@@ -7,7 +7,7 @@ public static class SettingsExtension
     {
         var settings = configuration
             .GetSection("Settings")
-            .Get<Settings>() ?? throw new SettingsNotConfiguredException();
+            .Get<Settings>()!;
 
         services.AddSingleton<ISettings>(settings);
 
